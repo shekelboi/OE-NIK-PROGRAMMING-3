@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E465C81-8409-4954-84AD-0511D197C39D}</ProjectGuid>
+    <ProjectGuid>{52559DF1-D62D-427A-B773-8AF1CB3F236A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>OENIK_PROG3_2019_1_GO10DV</RootNamespace>
     <AssemblyName>OENIK_PROG3_2019_1_GO10DV</AssemblyName>

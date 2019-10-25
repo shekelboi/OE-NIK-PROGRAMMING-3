@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OENIK_PROG3_2019_1_GO10DV", "OENIK_PROG3_2019_1_GO10DV\OENIK_PROG3_2019_1_GO10DV.csproj", "{2E465C81-8409-4954-84AD-0511D197C39D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OENIK_PROG3_2019_1_GO10DV", "OENIK_PROG3_2019_1_GO10DV\OENIK_PROG3_2019_1_GO10DV.csproj", "{52559DF1-D62D-427A-B773-8AF1CB3F236A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2E465C81-8409-4954-84AD-0511D197C39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E465C81-8409-4954-84AD-0511D197C39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E465C81-8409-4954-84AD-0511D197C39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E465C81-8409-4954-84AD-0511D197C39D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52559DF1-D62D-427A-B773-8AF1CB3F236A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52559DF1-D62D-427A-B773-8AF1CB3F236A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52559DF1-D62D-427A-B773-8AF1CB3F236A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52559DF1-D62D-427A-B773-8AF1CB3F236A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {31922076-D5C1-4EE1-8382-8E068373BD2A}
+		SolutionGuid = {428ACCB3-6256-40E1-9E40-BBB67DDC0C70}
 	EndGlobalSection
 EndGlobal
