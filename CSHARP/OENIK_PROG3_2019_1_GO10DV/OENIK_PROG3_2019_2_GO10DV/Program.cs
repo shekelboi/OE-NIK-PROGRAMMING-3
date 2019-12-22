@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Languages.Logic;
 
-namespace OENIK_PROG3_2019_1_GO10DV
+namespace OENIK_PROG3_2019_2_GO10DV
 {
     public class Program // Main program
     {

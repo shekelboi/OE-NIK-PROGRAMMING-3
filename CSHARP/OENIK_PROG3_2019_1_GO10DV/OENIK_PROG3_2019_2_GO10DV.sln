@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Languages.Program", "OENIK_PROG3_2019_1_GO10DV\Languages.Program.csproj", "{41223EB5-AB9D-4BA7-9752-48878099C302}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Languages.Program", "OENIK_PROG3_2019_2_GO10DV\Languages.Program.csproj", "{41223EB5-AB9D-4BA7-9752-48878099C302}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Languages.Repository", "Languages.Repository\Languages.Repository.csproj", "{7C7D4BAA-7BFE-4864-9F5A-FF64516D0106}"
 EndProject
