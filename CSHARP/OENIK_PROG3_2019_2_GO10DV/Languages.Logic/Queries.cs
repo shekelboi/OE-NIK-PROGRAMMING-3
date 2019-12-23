@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Languages.Data;
 
@@ -15,22 +16,473 @@ namespace Languages.Logic
         private static DatabaseEntities db = new DatabaseEntities();
 
         /// <summary>
+        /// Initializing the database by setting it back to the default state.
+        /// </summary>
+        public static void InitDB()
+        {
+            db.Database.ExecuteSqlCommand(File.ReadAllText(@"..\..\..\Languages.Data\SQL\Table creation.sql")); // Because of some caching problem sometimes it doesn't work, if that's the case just modify anything in the source and rebuild the solution.
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Removes a specific entry from the database.
+        /// </summary>
+        /// <param name="table">Table to remove from.</param>
+        public static void Remove(string table)
+        {
+            Console.Write("WHERE: ");
+            string where = Console.ReadLine();
+            Console.Write("EQUAL TO: ");
+            string value = Console.ReadLine();
+            db.Database.ExecuteSqlCommand("delete from " + table + " where " + table + "." + where + " = '" + value + "';");
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Modifying a value inside a table.
+        /// </summary>
+        /// <param name="table">The table in which we update the value.</param>
+        public static void Modify(string table)
+        {
+            Console.Write("WHERE: ");
+            string where = Console.ReadLine();
+            Console.Write("EQUAL TO: ");
+            string value = Console.ReadLine();
+            Console.Write("FIELD TO UPDATE: ");
+            string field = Console.ReadLine();
+            Console.Write("NEW VALUE: ");
+            string newValue = Console.ReadLine();
+            db.Database.ExecuteSqlCommand("update " + table + " set " + field + " = '" + newValue + "' where " + table + "." + where + " = '" + value + "';");
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adding a new language family-language link.
+        /// </summary>
+        public static void AddLangfamLangLink()
+        {
+            langfam_lang_link lll = new langfam_lang_link();
+            string input;
+
+            //// ID
+            //Console.Write("ID (optional): ");
+            //input = Console.ReadLine();
+
+            //if (input != string.Empty)
+            //{
+            //    if (int.TryParse(input, out int id))
+            //    {
+            //        cll.id = id;
+            //    }
+            //    else
+            //    {
+            //        throw new FormatException();
+            //    }
+            //}
+
+            // Language family id
+            Console.Write("langfam_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int langfam_id;
+                if (int.TryParse(input, out langfam_id))
+                {
+                    lll.langfam_id = langfam_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Language id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int lang_id;
+                if (int.TryParse(input, out lang_id))
+                {
+                    lll.lang_id = lang_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            db.langfam_lang_link.Add(lll);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adding a new country-language link.
+        /// </summary>
+        public static void AddCountryLangLink()
+        {
+            country_lang_link cll = new country_lang_link();
+            string input;
+
+            //// ID
+            //Console.Write("ID (optional): ");
+            //input = Console.ReadLine();
+
+            //if (input != string.Empty)
+            //{
+            //    if (int.TryParse(input, out int id))
+            //    {
+            //        cll.id = id;
+            //    }
+            //    else
+            //    {
+            //        throw new FormatException();
+            //    }
+            //}
+
+            // Country id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int country_id;
+                if (int.TryParse(input, out country_id))
+                {
+                    cll.country_id = country_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Language id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int lang_id;
+                if (int.TryParse(input, out lang_id))
+                {
+                    cll.lang_id = lang_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            db.country_lang_link.Add(cll);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adding a new language family.
+        /// </summary>
+        public static void AddLanguageFamily()
+        {
+            language_family lf = new language_family();
+            string input;
+
+            //// ID
+            //Console.Write("ID (optional): ");
+            //input = Console.ReadLine();
+
+            //if (input != string.Empty)
+            //{
+            //    if (int.TryParse(input, out int id))
+            //    {
+            //        lf.id = id;
+            //    }
+            //    else
+            //    {
+            //        throw new FormatException();
+            //    }
+            //}
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                lf.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Agglutinative
+            Console.Write("ISO code: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                lf.iso_code = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of speakers
+            Console.Write("Number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int speakers;
+                if (int.TryParse(input, out speakers))
+                {
+                    lf.number_of_speakers = speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of speakers
+            Console.Write("Rank by number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int rank_speakers;
+                if (int.TryParse(input, out rank_speakers))
+                {
+                    lf.rank_by_no_speakers = rank_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of languages.
+            Console.Write("Number of languages: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int no_languages;
+                if (int.TryParse(input, out no_languages))
+                {
+                    lf.number_of_languages = no_languages;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of languages
+            Console.Write("Rank by number of languages: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int rank;
+                if (int.TryParse(input, out rank))
+                {
+                    lf.number_of_languages = rank;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            db.language_family.Add(lf);
+            db.SaveChanges();
+        }
+
+        /// <summary>
         /// Adding a new language.
         /// </summary>
         public static void AddLanguage()
         {
-            //language l = new language();
-            //l.agglutinative = "F";
-            //l.difficulty = "Hard";
-            //l.name = "WHATEVER";
-            //l.no_of_noun_declension_cases = 12;
-            //l.number_of_speakers = 8298191;
-            //l.number_of_tenses = 2;
-            //l.rank_by_no_speakers = 10;
-            //l.langfam_lang_link.Add(new langfam_lang_link { langfam_id = 2, lang_id = l.id });
-            //db.language.Add(l);
+            language l = new language();
+            string input;
 
-            db.Database.SqlQuery<string>("insert into country(name, population, capital, continent, area) values('Bangladesh', 164700000, 'WRONG VALUE', 'Asia', 147570); insert into country_lang_link(country_id, lang_id) values(12, 1)");
+            //// ID
+            //Console.Write("ID (optional): ");
+            //input = Console.ReadLine();
+
+            //if (input != string.Empty)
+            //{
+            //    if (int.TryParse(input, out int id))
+            //    {
+            //        l.id = id;
+            //    }
+            //    else
+            //    {
+            //        throw new FormatException();
+            //    }
+            //}
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Agglutinative
+            Console.Write("Agglutinative (Y/N): ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.agglutinative = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of tenses
+            Console.Write("Number of tenses: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int tenses;
+                if (int.TryParse(input, out tenses))
+                {
+                    l.number_of_tenses = tenses;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of noun declension cases
+            Console.Write("Number of noun declension cases: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int declension;
+                if (int.TryParse(input, out declension))
+                {
+                    l.no_of_noun_declension_cases = declension;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Difficulty
+            Console.Write("Difficulty: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.difficulty = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of speakers
+            Console.Write("Number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int numb_speakers;
+                if (int.TryParse(input, out numb_speakers))
+                {
+                    l.number_of_speakers = numb_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of speakers
+            Console.Write("Rank by number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int rank_speakers;
+                if (int.TryParse(input, out rank_speakers))
+                {
+                    l.rank_by_no_speakers = rank_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            db.language.Add(l);
+            db.SaveChanges();
         }
 
         /// <summary>
@@ -39,13 +491,107 @@ namespace Languages.Logic
         public static void AddCountry()
         {
             country c = new country();
-            c.area = 10;
-            c.capital = "ok";
-            c.continent = "ok";
-            c.name = "OKKKK";
-            c.population = 829112;
-            c.country_lang_link.Add(new country_lang_link { country_id = c.id, lang_id = 2 });
+            string input;
+
+            //// ID
+            //Console.Write("ID (optional): ");
+            //input = Console.ReadLine();
+
+            //if (input != string.Empty)
+            //{
+            //    if (int.TryParse(input, out int id))
+            //    {
+            //        c.id = id;
+            //    }
+            //    else
+            //    {
+            //        throw new FormatException();
+            //    }
+            //}
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Area
+            Console.Write("Area: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int area;
+                if (int.TryParse(input, out area))
+                {
+                    c.area = area;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Capital
+            Console.Write("Capital: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.capital = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Continent
+            Console.Write("Continent: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.continent = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Population
+            Console.Write("Population: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                int population;
+                if (int.TryParse(input, out population))
+                {
+                    c.population = population;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
             db.country.Add(c);
+            db.SaveChanges();
         }
 
         /// <summary>

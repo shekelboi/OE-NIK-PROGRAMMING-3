@@ -14,6 +14,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
     {
         private static void Main(string[] args)
         {
+            Queries.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
 
@@ -42,14 +43,15 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     break;
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
-                    //Queries.AddLanguage();
-                    Queries.AddCountry();
+                    Operations(Operation.ADD);
                     break;
                 case ConsoleKey.D4:
                 case ConsoleKey.NumPad4:
+                    Operations(Operation.UPDATE);
                     break;
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
+                    Operations(Operation.REMOVE);
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
@@ -119,6 +121,125 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             Console.ReadKey(true);
             Menu();
+        }
+
+        private static void Operations(Operation o)
+        {
+            Console.Clear();
+            Console.WriteLine("1. Country");
+            Console.WriteLine("2. Language");
+            Console.WriteLine("3. Language family");
+            Console.WriteLine("4. Country_lang_link");
+            Console.WriteLine("5. Langfam_lang_link");
+            Console.WriteLine("6. Main Menu");
+            Console.WriteLine("7. Exit");
+            var input = Console.ReadKey(true).Key;
+            Console.Clear();
+
+            switch (input)
+            {
+                case ConsoleKey.D1:
+                case ConsoleKey.NumPad1:
+                    switch (o)
+                    {
+                        case Operation.ADD:
+                            Queries.AddCountry();
+                            break;
+                        case Operation.REMOVE:
+                            Queries.Remove("country");
+                            break;
+                        case Operation.UPDATE:
+                            Queries.Modify("country");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case ConsoleKey.D2:
+                case ConsoleKey.NumPad2:
+                    switch (o)
+                    {
+                        case Operation.ADD:
+                            Queries.AddLanguage();
+                            break;
+                        case Operation.REMOVE:
+                            Queries.Remove("language");
+                            break;
+                        case Operation.UPDATE:
+                            Queries.Modify("language");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case ConsoleKey.D3:
+                case ConsoleKey.NumPad3:
+                    switch (o)
+                    {
+                        case Operation.ADD:
+                            Queries.AddLanguageFamily();
+                            break;
+                        case Operation.REMOVE:
+                            Queries.Remove("language_family");
+                            break;
+                        case Operation.UPDATE:
+                            Queries.Modify("language_family");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case ConsoleKey.D4:
+                case ConsoleKey.NumPad4:
+                    switch (o)
+                    {
+                        case Operation.ADD:
+                            Queries.AddCountryLangLink();
+                            break;
+                        case Operation.REMOVE:
+                            Queries.Remove("country_lang_link");
+                            break;
+                        case Operation.UPDATE:
+                            Queries.Modify("country_lang_link");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case ConsoleKey.D5:
+                case ConsoleKey.NumPad5:
+                    switch (o)
+                    {
+                        case Operation.ADD:
+                            Queries.AddLangfamLangLink();
+                            break;
+                        case Operation.REMOVE:
+                            Queries.Remove("langfam_lang_link");
+                            break;
+                        case Operation.UPDATE:
+                            Queries.Modify("langfam_lang_link");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case ConsoleKey.D6:
+                case ConsoleKey.NumPad6:
+                    Menu();
+                    break;
+                case ConsoleKey.D7:
+                case ConsoleKey.NumPad7:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Invalid();
+                    break;
+            }
         }
 
         private static void Invalid()
