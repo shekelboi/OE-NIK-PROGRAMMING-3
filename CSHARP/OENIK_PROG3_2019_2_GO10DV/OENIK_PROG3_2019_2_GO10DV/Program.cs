@@ -69,7 +69,8 @@ namespace OENIK_PROG3_2019_2_GO10DV
             Console.WriteLine("3. Official languages by country");
             Console.WriteLine("4. Number of languages by difficulty");
             Console.WriteLine("5. Number of speakers by language");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. Main menu");
+            Console.WriteLine("7. Exit");
 
             var input = Console.ReadKey(true).Key;
             Console.Clear();
@@ -98,6 +99,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
+                    Menu();
+                    break;
+                case ConsoleKey.D7:
+                case ConsoleKey.NumPad7:
                     Environment.Exit(0);
                     break;
                 default:
