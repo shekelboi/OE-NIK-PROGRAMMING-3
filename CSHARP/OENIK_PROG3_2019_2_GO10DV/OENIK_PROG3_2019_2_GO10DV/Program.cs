@@ -20,12 +20,13 @@ namespace OENIK_PROG3_2019_2_GO10DV
         private static void Menu()
         {
             Console.Clear();
-            Console.WriteLine("1. Queries");
-            Console.WriteLine("2. Add entity");
-            Console.WriteLine("3. Modify entity");
-            Console.WriteLine("4. Remove entity");
-            Console.WriteLine("5. Use the JAVA web endpoint");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("1. List all entries");
+            Console.WriteLine("2. Queries");
+            Console.WriteLine("3. Add entity");
+            Console.WriteLine("4. Modify entity");
+            Console.WriteLine("5. Remove entity");
+            Console.WriteLine("6. Use the JAVA web endpoint");
+            Console.WriteLine("7. Exit");
             var input = Console.ReadKey(true).Key;
             Console.Clear();
 
@@ -33,13 +34,16 @@ namespace OENIK_PROG3_2019_2_GO10DV
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    QueryMenu();
+                    Queries.ListAll();
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
+                    QueryMenu();
                     break;
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
+                    //Queries.AddLanguage();
+                    Queries.AddCountry();
                     break;
                 case ConsoleKey.D4:
                 case ConsoleKey.NumPad4:
@@ -49,6 +53,9 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
+                    break;
+                case ConsoleKey.D7:
+                case ConsoleKey.NumPad7:
                     Environment.Exit(0);
                     break;
                 default:
