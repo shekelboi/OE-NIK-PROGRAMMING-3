@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Languages.Logic;
-
-namespace OENIK_PROG3_2019_2_GO10DV
+﻿namespace OENIK_PROG3_2019_2_GO10DV
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Languages.Repository;
+
     /// <summary>
     /// The main program.
     /// </summary>
@@ -146,10 +146,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                             Queries.AddCountry();
                             break;
                         case Operation.REMOVE:
-                            Queries.Remove("country");
+                            RemovePrompt("country");
                             break;
                         case Operation.UPDATE:
-                            Queries.Modify("country");
+                            ModifyPrompt("country");
                             break;
                         default:
                             break;
@@ -164,10 +164,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                             Queries.AddLanguage();
                             break;
                         case Operation.REMOVE:
-                            Queries.Remove("language");
+                            RemovePrompt("language");
                             break;
                         case Operation.UPDATE:
-                            Queries.Modify("language");
+                            ModifyPrompt("language");
                             break;
                         default:
                             break;
@@ -182,10 +182,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                             Queries.AddLanguageFamily();
                             break;
                         case Operation.REMOVE:
-                            Queries.Remove("language_family");
+                            RemovePrompt("language_family");
                             break;
                         case Operation.UPDATE:
-                            Queries.Modify("language_family");
+                            ModifyPrompt("language_family");
                             break;
                         default:
                             break;
@@ -200,10 +200,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                             Queries.AddCountryLangLink();
                             break;
                         case Operation.REMOVE:
-                            Queries.Remove("country_lang_link");
+                            RemovePrompt("country_lang_link");
                             break;
                         case Operation.UPDATE:
-                            Queries.Modify("country_lang_link");
+                            ModifyPrompt("country_lang_link");
                             break;
                         default:
                             break;
@@ -218,10 +218,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                             Queries.AddLangfamLangLink();
                             break;
                         case Operation.REMOVE:
-                            Queries.Remove("langfam_lang_link");
+                            RemovePrompt("langfam_lang_link");
                             break;
                         case Operation.UPDATE:
-                            Queries.Modify("langfam_lang_link");
+                            ModifyPrompt("langfam_lang_link");
                             break;
                         default:
                             break;
@@ -240,6 +240,28 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     Invalid();
                     break;
             }
+        }
+
+        private static void RemovePrompt(string table)
+        {
+            Console.Write("WHERE: ");
+            string where = Console.ReadLine();
+            Console.Write("EQUAL TO: ");
+            string value = Console.ReadLine();
+            Queries.Remove(table, where, value);
+        }
+
+        private static void ModifyPrompt(string table)
+        {
+            Console.Write("WHERE: ");
+            string where = Console.ReadLine();
+            Console.Write("EQUAL TO: ");
+            string value = Console.ReadLine();
+            Console.Write("FIELD TO UPDATE: ");
+            string field = Console.ReadLine();
+            Console.Write("NEW VALUE: ");
+            string newValue = Console.ReadLine();
+            Queries.Modify(table, where, value, field, newValue);
         }
 
         private static void Invalid()

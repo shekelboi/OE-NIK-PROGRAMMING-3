@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using Languages.Data;
-
-namespace Languages.Logic
+﻿namespace Languages.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Languages.Data;
+
     /// <summary>
     /// A class for the queries.
     /// </summary>
@@ -27,13 +27,11 @@ namespace Languages.Logic
         /// <summary>
         /// Removes a specific entry from the database.
         /// </summary>
-        /// <param name="table">Table to remove from.</param>
-        public static void Remove(string table)
+        /// <param name="table">Table to remove the entry from.</param>
+        /// <param name="where">Where to remove the entry from.</param>
+        /// <param name="value">Value of the entry at that point.</param>
+        public static void Remove(string table, string where, string value)
         {
-            Console.Write("WHERE: ");
-            string where = Console.ReadLine();
-            Console.Write("EQUAL TO: ");
-            string value = Console.ReadLine();
             db.Database.ExecuteSqlCommand("delete from " + table + " where " + table + "." + where + " = '" + value + "';");
             db.SaveChanges();
         }
@@ -41,17 +39,13 @@ namespace Languages.Logic
         /// <summary>
         /// Modifying a value inside a table.
         /// </summary>
-        /// <param name="table">The table in which we update the value.</param>
-        public static void Modify(string table)
+        /// <param name="table">Table to modify..</param>
+        /// <param name="where">Where you modify the record.</param>
+        /// <param name="value">Original value.</param>
+        /// <param name="field">Field to modify.</param>
+        /// <param name="newValue">New value.</param>
+        public static void Modify(string table, string where, string value, string field, string newValue)
         {
-            Console.Write("WHERE: ");
-            string where = Console.ReadLine();
-            Console.Write("EQUAL TO: ");
-            string value = Console.ReadLine();
-            Console.Write("FIELD TO UPDATE: ");
-            string field = Console.ReadLine();
-            Console.Write("NEW VALUE: ");
-            string newValue = Console.ReadLine();
             db.Database.ExecuteSqlCommand("update " + table + " set " + field + " = '" + newValue + "' where " + table + "." + where + " = '" + value + "';");
             db.SaveChanges();
         }
@@ -597,7 +591,7 @@ namespace Languages.Logic
         /// <summary>
         /// Listing the elements.
         /// </summary>
-        public static void NamesOfCountries()
+        public static void NamesOfCountries<T>()
         {
             var q = db.Database.SqlQuery<Items<string, int>>("select name as [A], population as [B] from country;");
 
