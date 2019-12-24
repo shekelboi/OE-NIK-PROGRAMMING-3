@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    interface IRepository
+    public interface IRepository
     {
         void InitDB();
 
@@ -25,7 +25,7 @@
         void AddCountry();
 
         void NamesOfCountries();
-        
+
         void NumberOfSpeakersRollup();
 
         void LanguageFamilies();

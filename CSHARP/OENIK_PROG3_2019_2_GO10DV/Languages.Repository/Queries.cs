@@ -335,7 +335,6 @@
         {
             language l = new language();
             string input;
-
             //// ID
             //Console.Write("ID (optional): ");
             //input = Console.ReadLine();
@@ -589,22 +588,28 @@
         }
 
         /// <summary>
-        /// Listing the elements.
+        /// Listing the names and the populations of countries.
         /// </summary>
-        public static void NamesOfCountries<T>()
+        /// <returns>Result.</returns>
+        public static string NamesOfCountries()
         {
             var q = db.Database.SqlQuery<Items<string, int>>("select name as [A], population as [B] from country;");
 
+            string result = string.Empty;
+
             foreach (var item in q)
             {
-                Console.WriteLine(item.A);
+                result += string.Format("{0, 15} {1, 20}", item.A, item.B);
             }
+
+            return result;
         }
 
         /// <summary>
         /// Number of speakers based on the language or the difficulty.
         /// </summary>
-        public static void NumberOfSpeakersRollup()
+        /// <returns>Result.</returns>
+        public static string NumberOfSpeakersRollup()
         {
             string sql = "select language.name as [A], language.difficulty as [B], sum(convert(bigint, language.number_of_speakers))" +
                 "as [C] from language group by rollup(language.difficulty, language.name);";
@@ -612,20 +617,22 @@
 
             string header = string.Format("{0,20} {1,10} {2,20}", "Language", "Difficulty", "No. of speakers");
 
-            Console.WriteLine(header + "\n");
+            string result = header + "\n";
 
             foreach (var item in q)
             {
-                string s = string.Format("{0,20} {1,10} {2,20}", item.A, item.B, item.C);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0,20} {1,10} {2,20}", item.A, item.B, item.C) + "\n";
+                result += s;
             }
+
+            return result;
         }
 
         /// <summary>
         /// Selecting languages and their corresponding language families.
         /// </summary>
-        public static void LanguageFamilies()
+        /// <returns>Result.</returns>
+        public static string LanguageFamilies()
         {
             string sql = "select language.name as [A], language_family.name as [B] " +
                 "from language join langfam_lang_link on language.id = langfam_lang_link.lang_id " +
@@ -634,20 +641,22 @@
 
             string header = string.Format("{0,20} {1,30}", "Language", "Language family");
 
-            Console.WriteLine(header + "\n");
+            string result = header + "\n";
 
             foreach (var item in q)
             {
-                string s = string.Format("{0,20} {1,30}", item.A, item.B);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0,20} {1,30}", item.A, item.B) + "\n";
+                result += s;
             }
+
+            return result;
         }
 
         /// <summary>
         /// Displaying the official languages of each country.
         /// </summary>
-        public static void OfficialLanguages()
+        /// <returns>Result.</returns>
+        public static string OfficialLanguages()
         {
             string sql = "select concat(country.name, ' has ' + language.name + ' as their official language.') as [A] " +
                 "from language join langfam_lang_link on language.id = langfam_lang_link.lang_id " +
@@ -658,43 +667,45 @@
 
             string header = string.Format("{0,20}", "Official language");
 
-            Console.WriteLine(header + "\n");
+            string result = header + "\n";
 
             foreach (var item in q)
             {
-                string s = string.Format("{0,20}", item.A);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0,20}", item.A) + "\n";
+                result += s;
             }
+            return result;
         }
 
         /// <summary>
         /// Number of languages by difficulty.
         /// </summary>
-        public static void LanguagesByDifficulty()
+        /// <returns>The result.</returns>
+        public static string LanguagesByDifficulty()
         {
             string sql = "select language.difficulty as [A], count(language.id) as [B] " +
                 "from language group by language.difficulty " +
                 "order by [B] desc;";
             var q = db.Database.SqlQuery<Items<string, int>>(sql);
 
-
             string header = string.Format("{0,6} {1, 6}", "Difficulty", "No. of speakers");
 
-            Console.WriteLine(header + "\n");
+            string result = header + "\n";
 
             foreach (var item in q)
             {
-                string s = string.Format("{0,6} {1, 6}", item.A, item.B);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0,6} {1, 6}", item.A, item.B) + "\n";
+                result += s;
             }
+
+            return result;
         }
 
         /// <summary>
         /// Displays each of the languages and the number of their speakers in descending order.
         /// </summary>
-        public static void NumberOfSpeakers()
+        /// <returns>Result.</returns>
+        public static string NumberOfSpeakers()
         {
             string sql = "select language.name as [A], sum(country.population) as [B] " +
                 "from language " +
@@ -708,75 +719,75 @@
 
             string header = string.Format("{0,20} {1, 20}", "Language", "Speakers");
 
-            Console.WriteLine(header + "\n");
+            string result = header + "\n";
 
             foreach (var item in q)
             {
-                string s = string.Format("{0,20} {1, 20}", item.A, item.B);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0,20} {1, 20}", item.A, item.B) + "\n";
+                result += s;
             }
+
+            return result;
         }
 
         /// <summary>
         /// Listing all the entries.
         /// </summary>
-        public static void ListAll()
+        /// <returns>Result.</returns>
+        public static string ListAll()
         {
-            Console.WriteLine("========Countries========");
+            string result = string.Empty;
+            result += "========Countries========" + "\n";
 
-            Console.WriteLine(string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", "ID", "Name", "Population", "Capital", "Continent", "Area") + "\n");
+            result += string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", "ID", "Name", "Population", "Capital", "Continent", "Area") + "\n\n";
 
             foreach (var c in db.country)
             {
-                string s = string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", c.id, c.name, c.population, c.capital, c.continent, c.area);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", c.id, c.name, c.population, c.capital, c.continent, c.area) + "\n";
+                result += s;
             }
 
-            Console.WriteLine("========Language families========");
+            result += "========Language families========" + "\n";
 
-            Console.WriteLine(string.Format("{0, 5} {1, 30} {2, 10} {3, 10} {4, 5} {5, 10} {6, 5}", "ID", "Name", "ISO", "No. of speakers", "Rank by no. of speakers", "No. of languages", "Rank by no. of languages") + "\n");
+            result += string.Format("{0, 5} {1, 30} {2, 10} {3, 10} {4, 5} {5, 10} {6, 5}", "ID", "Name", "ISO", "No. of speakers", "Rank by no. of speakers", "No. of languages", "Rank by no. of languages") + "\n\n";
 
             foreach (var l in db.language_family)
             {
-                string s = string.Format("{0, 5} {1, 30} {2, 10} {3, 10} {4, 5} {5, 10} {6, 5}", l.id, l.name, l.iso_code, l.rank_by_no_speakers, l.rank_by_no_speakers, l.number_of_languages, l.rank_by_no_languages);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0, 5} {1, 30} {2, 10} {3, 10} {4, 5} {5, 10} {6, 5}", l.id, l.name, l.iso_code, l.rank_by_no_speakers, l.rank_by_no_speakers, l.number_of_languages, l.rank_by_no_languages) + "\n";
+                result += s;
             }
 
-            Console.WriteLine("========Languages========");
+            result += "========Languages========" + "\n";
 
-            Console.WriteLine(string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 20} {5, 12} {6, 15} {7, 15}", "ID", "Name", "Agglutinative", "No. of tenses", "No. noun decl. cases", "Difficulty", "No. of speakers", "Rank by no. of speakers") + "\n");
+            result += string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 20} {5, 12} {6, 15} {7, 15}", "ID", "Name", "Agglutinative", "No. of tenses", "No. noun decl. cases", "Difficulty", "No. of speakers", "Rank by no. of speakers") + "\n\n";
 
             foreach (var l in db.language)
             {
-                string s = string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 20} {5, 12} {6, 15} {7, 15}", l.id, l.name, l.agglutinative, l.number_of_tenses, l.no_of_noun_declension_cases, l.difficulty, l.number_of_speakers, l.rank_by_no_speakers);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 20} {5, 12} {6, 15} {7, 15}", l.id, l.name, l.agglutinative, l.number_of_tenses, l.no_of_noun_declension_cases, l.difficulty, l.number_of_speakers, l.rank_by_no_speakers) + "\n";
+                result += s;
             }
 
-            Console.WriteLine("========country_lang_link========");
+            result += "========country_lang_link========" + "\n";
 
-            Console.WriteLine(string.Format("{0, 5} {1, 15} {2, 15}", "ID", "country_id", "language_id") + "\n");
+            result += string.Format("{0, 5} {1, 15} {2, 15}", "ID", "country_id", "language_id") + "\n\n";
 
             foreach (var cl in db.country_lang_link)
             {
-                string s = string.Format("{0, 5} {1, 15} {2, 15}", cl.id, cl.country_id, cl.lang_id);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0, 5} {1, 15} {2, 15}", cl.id, cl.country_id, cl.lang_id) + "\n";
+                result += s;
             }
 
-            Console.WriteLine("========langfam_lang_link========");
+            result += "========langfam_lang_link========" + "\n";
 
-            Console.WriteLine(string.Format("{0, 5} {1, 15} {2, 20}", "ID", "language_id", "language_family_id") + "\n");
+            result += string.Format("{0, 5} {1, 15} {2, 20}", "ID", "language_id", "language_family_id") + "\n\n";
 
             foreach (var ll in db.langfam_lang_link)
             {
-                string s = string.Format("{0, 5} {1, 15} {2, 15}", ll.id, ll.lang_id, ll.lang_id);
-
-                Console.WriteLine(s);
+                string s = string.Format("{0, 5} {1, 15} {2, 15}", ll.id, ll.lang_id, ll.lang_id) + "\n";
+                result += s;
             }
+
+            return result;
         }
 
         private class Items<T1>

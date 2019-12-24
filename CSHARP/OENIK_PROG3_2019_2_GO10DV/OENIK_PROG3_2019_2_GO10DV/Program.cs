@@ -35,7 +35,7 @@
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Queries.ListAll();
+                    Console.WriteLine(Queries.ListAll());
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
@@ -88,23 +88,23 @@
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Queries.NumberOfSpeakersRollup();
+                    Console.WriteLine(Queries.NumberOfSpeakersRollup());
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
-                    Queries.LanguageFamilies();
+                    Console.WriteLine(Queries.LanguageFamilies());
                     break;
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
-                    Queries.OfficialLanguages();
+                    Console.WriteLine(Queries.OfficialLanguages());
                     break;
                 case ConsoleKey.D4:
                 case ConsoleKey.NumPad4:
-                    Queries.LanguagesByDifficulty();
+                    Console.WriteLine(Queries.LanguagesByDifficulty());
                     break;
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
-                    Queries.NumberOfSpeakers();
+                    Console.WriteLine(Queries.NumberOfSpeakers());
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
