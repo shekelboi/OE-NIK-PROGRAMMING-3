@@ -11,7 +11,8 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,10 +22,18 @@ namespace Languages.Data
         }
     
         public int id { get; set; }
+        [StringLength(40)]
+        [Required()]
         public string name { get; set; }
+        [Required()]
         public int population { get; set; }
+        [StringLength(40)]
+        [Required()]
         public string capital { get; set; }
+        [StringLength(40)]
+        [Required()]
         public string continent { get; set; }
+        [Required()]
         public int area { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -87,6 +87,7 @@
     <Compile Include="country_lang_link.cs">
       <DependentUpon>ADO_db.tt</DependentUpon>
     </Compile>
+    <Compile Include="IsMorF.cs" />
     <Compile Include="langfam_lang_link.cs">
       <DependentUpon>ADO_db.tt</DependentUpon>
     </Compile>

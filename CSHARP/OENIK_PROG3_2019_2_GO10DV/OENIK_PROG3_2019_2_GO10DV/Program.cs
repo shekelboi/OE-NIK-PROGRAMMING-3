@@ -6,6 +6,9 @@
     using System.Text;
     using System.Threading.Tasks;
     using Languages.Repository;
+    using Languages.Data;
+    using System.Reflection;
+
 
     /// <summary>
     /// The main program.
@@ -14,6 +17,15 @@
     {
         private static void Main(string[] args)
         {
+            ////////////Activator.CreateInstance()
+            //DatabaseEntities db = new DatabaseEntities();
+            //Type t = (new country()).GetType();
+            //System.Reflection.PropertyInfo[] pi = t.GetProperties();
+            //foreach (var item in pi)
+            //{
+            //    Console.WriteLine(item.PropertyType + "\t" + item.Name);
+            //}
+            //Console.ReadLine();
             Queries.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
@@ -83,40 +95,46 @@
 
             var input = Console.ReadKey(true).Key;
             Console.Clear();
-
-            switch (input)
+            try
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.NumPad1:
-                    Console.WriteLine(Queries.NumberOfSpeakersRollup());
-                    break;
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    Console.WriteLine(Queries.LanguageFamilies());
-                    break;
-                case ConsoleKey.D3:
-                case ConsoleKey.NumPad3:
-                    Console.WriteLine(Queries.OfficialLanguages());
-                    break;
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                    Console.WriteLine(Queries.LanguagesByDifficulty());
-                    break;
-                case ConsoleKey.D5:
-                case ConsoleKey.NumPad5:
-                    Console.WriteLine(Queries.NumberOfSpeakers());
-                    break;
-                case ConsoleKey.D6:
-                case ConsoleKey.NumPad6:
-                    Menu();
-                    break;
-                case ConsoleKey.D7:
-                case ConsoleKey.NumPad7:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Invalid();
-                    break;
+                switch (input)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        Console.WriteLine(Queries.NumberOfSpeakersRollup());
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        Console.WriteLine(Queries.LanguageFamilies());
+                        break;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        Console.WriteLine(Queries.OfficialLanguages());
+                        break;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        Console.WriteLine(Queries.LanguagesByDifficulty());
+                        break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        Console.WriteLine(Queries.NumberOfSpeakers());
+                        break;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        Menu();
+                        break;
+                    case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Invalid();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
             Console.ReadKey(true);
@@ -136,110 +154,539 @@
             var input = Console.ReadKey(true).Key;
             Console.Clear();
 
-            switch (input)
+            try
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.NumPad1:
-                    switch (o)
-                    {
-                        case Operation.ADD:
-                            Queries.AddCountry();
-                            break;
-                        case Operation.REMOVE:
-                            RemovePrompt("country");
-                            break;
-                        case Operation.UPDATE:
-                            ModifyPrompt("country");
-                            break;
-                        default:
-                            break;
-                    }
+                switch (input)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        switch (o)
+                        {
+                            case Operation.ADD:
+                                AddCountryPrompt();
+                                break;
+                            case Operation.REMOVE:
+                                RemovePrompt("country");
+                                break;
+                            case Operation.UPDATE:
+                                ModifyPrompt("country");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    break;
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    switch (o)
-                    {
-                        case Operation.ADD:
-                            Queries.AddLanguage();
-                            break;
-                        case Operation.REMOVE:
-                            RemovePrompt("language");
-                            break;
-                        case Operation.UPDATE:
-                            ModifyPrompt("language");
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        switch (o)
+                        {
+                            case Operation.ADD:
+                                AddLanguagePrompt();
+                                break;
+                            case Operation.REMOVE:
+                                RemovePrompt("language");
+                                break;
+                            case Operation.UPDATE:
+                                ModifyPrompt("language");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    break;
-                case ConsoleKey.D3:
-                case ConsoleKey.NumPad3:
-                    switch (o)
-                    {
-                        case Operation.ADD:
-                            Queries.AddLanguageFamily();
-                            break;
-                        case Operation.REMOVE:
-                            RemovePrompt("language_family");
-                            break;
-                        case Operation.UPDATE:
-                            ModifyPrompt("language_family");
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        switch (o)
+                        {
+                            case Operation.ADD:
+                                AddLanguageFamilyPrompt();
+                                break;
+                            case Operation.REMOVE:
+                                RemovePrompt("language_family");
+                                break;
+                            case Operation.UPDATE:
+                                ModifyPrompt("language_family");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    break;
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                    switch (o)
-                    {
-                        case Operation.ADD:
-                            Queries.AddCountryLangLink();
-                            break;
-                        case Operation.REMOVE:
-                            RemovePrompt("country_lang_link");
-                            break;
-                        case Operation.UPDATE:
-                            ModifyPrompt("country_lang_link");
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        switch (o)
+                        {
+                            case Operation.ADD:
+                                AddCountryLangLinkPrompt();
+                                break;
+                            case Operation.REMOVE:
+                                RemovePrompt("country_lang_link");
+                                break;
+                            case Operation.UPDATE:
+                                ModifyPrompt("country_lang_link");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    break;
-                case ConsoleKey.D5:
-                case ConsoleKey.NumPad5:
-                    switch (o)
-                    {
-                        case Operation.ADD:
-                            Queries.AddLangfamLangLink();
-                            break;
-                        case Operation.REMOVE:
-                            RemovePrompt("langfam_lang_link");
-                            break;
-                        case Operation.UPDATE:
-                            ModifyPrompt("langfam_lang_link");
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        switch (o)
+                        {
+                            case Operation.ADD:
+                                AddLangfamLangLinkPrompt();
+                                break;
+                            case Operation.REMOVE:
+                                RemovePrompt("langfam_lang_link");
+                                break;
+                            case Operation.UPDATE:
+                                ModifyPrompt("langfam_lang_link");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    break;
-                case ConsoleKey.D6:
-                case ConsoleKey.NumPad6:
-                    Menu();
-                    break;
-                case ConsoleKey.D7:
-                case ConsoleKey.NumPad7:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Invalid();
-                    break;
+                        break;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        Menu();
+                        break;
+                    case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Invalid();
+                        break;
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private static void AddLangfamLangLinkPrompt()
+        {
+            langfam_lang_link lll = new langfam_lang_link();
+            string input;
+
+            // Language family id
+            Console.Write("langfam_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int langfam_id))
+                {
+                    lll.langfam_id = langfam_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Language id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int lang_id))
+                {
+                    lll.lang_id = lang_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+        }
+
+        private static void AddCountryLangLinkPrompt()
+        {
+            country_lang_link cll = new country_lang_link();
+            string input;
+
+            // Country id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int country_id))
+                {
+                    cll.country_id = country_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Language id
+            Console.Write("lang_id: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int lang_id))
+                {
+                    cll.lang_id = lang_id;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            Queries.AddCountryLangLink(cll);
+        }
+
+        private static void AddLanguageFamilyPrompt()
+        {
+            language_family lf = new language_family();
+            string input;
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                lf.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // ISO code
+            Console.Write("ISO code: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                lf.iso_code = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of speakers
+            Console.Write("Number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int speakers))
+                {
+                    lf.number_of_speakers = speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of speakers
+            Console.Write("Rank by number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int rank_speakers))
+                {
+                    lf.rank_by_no_speakers = rank_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of languages.
+            Console.Write("Number of languages: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int no_languages))
+                {
+                    lf.number_of_languages = no_languages;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of languages
+            Console.Write("Rank by number of languages: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int rank))
+                {
+                    lf.rank_by_no_languages = rank;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            Queries.AddLanguageFamily(lf);
+        }
+
+        private static void AddLanguagePrompt()
+        {
+            language l = new language();
+            string input;
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Agglutinative
+            Console.Write("Agglutinative (Y/N): ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.agglutinative = input.ToUpper();
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of tenses
+            Console.Write("Number of tenses: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int tenses))
+                {
+                    l.number_of_tenses = tenses;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of noun declension cases
+            Console.Write("Number of noun declension cases: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int declension))
+                {
+                    l.no_of_noun_declension_cases = declension;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Difficulty
+            Console.Write("Difficulty: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                l.difficulty = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Number of speakers
+            Console.Write("Number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int numb_speakers))
+                {
+                    l.number_of_speakers = numb_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Rank by number of speakers
+            Console.Write("Rank by number of speakers: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int rank_speakers))
+                {
+                    l.rank_by_no_speakers = rank_speakers;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            Queries.AddLanguage(l);
+        }
+
+        private static void AddCountryPrompt()
+        {
+            country c = new country();
+            string input;
+
+            // Name
+            Console.Write("Name: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.name = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Population
+            Console.Write("Population: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int population))
+                {
+                    c.population = population;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Capital
+            Console.Write("Capital: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.capital = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Continent
+            Console.Write("Continent: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                c.continent = input;
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            // Area
+            Console.Write("Area: ");
+            input = Console.ReadLine();
+
+            if (input != string.Empty)
+            {
+                if (int.TryParse(input, out int area))
+                {
+                    c.area = area;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+
+            Queries.AddCountry(c);
         }
 
         private static void RemovePrompt(string table)
