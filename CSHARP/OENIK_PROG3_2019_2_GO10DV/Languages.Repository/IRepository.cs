@@ -1,4 +1,8 @@
-﻿namespace Languages.Repository
+﻿// <copyright file="IRepository.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Repository
 {
     using System;
     using System.Collections.Generic;
@@ -44,7 +48,7 @@
         /// <summary>
         /// Adding a new country-language link.
         /// </summary>
-        /// <param name="cll">Coutnry-language link entry.</param>
+        /// <param name="cll">Country-language link entry.</param>
         void AddCountryLangLink(country_lang_link cll);
 
         /// <summary>
@@ -68,43 +72,43 @@
         /// <summary>
         /// Listing the names and the populations of countries.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string NamesOfCountries();
 
         /// <summary>
         /// Number of speakers based on the language or the difficulty.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string NumberOfSpeakersRollup();
 
         /// <summary>
         /// Selecting languages and their corresponding language families.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string LanguageFamilies();
 
         /// <summary>
         /// Displaying the official languages of each country.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string OfficialLanguages();
 
         /// <summary>
         /// Number of languages by difficulty.
         /// </summary>
-        /// <returns>The result.</returns>
+        /// <returns>Returns result.</returns>
         string LanguagesByDifficulty();
 
         /// <summary>
         /// Displays each of the languages and the number of their speakers in descending order.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string NumberOfSpeakers();
 
         /// <summary>
         /// Listing all the entries.
         /// </summary>
-        /// <returns>Result.</returns>
+        /// <returns>Returns result.</returns>
         string ListAll();
     }
 }

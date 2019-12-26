@@ -1,10 +1,10 @@
-﻿namespace Languages.Repository
+﻿// <copyright file="EmptyInputException.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Repository
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Exception for empty input.

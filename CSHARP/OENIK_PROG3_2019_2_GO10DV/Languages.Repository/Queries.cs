@@ -1,11 +1,10 @@
-﻿namespace Languages.Repository
+﻿// <copyright file="Queries.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Repository
 {
-    using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Languages.Data;
 
     /// <summary>
@@ -13,6 +12,9 @@
     /// </summary>
     public class Queries : IRepository
     {
+        /// <summary>
+        /// New database entity.
+        /// </summary>
         private DatabaseEntities db = new DatabaseEntities();
 
         /// <inheritdoc/>
@@ -254,35 +256,87 @@
             return result;
         }
 
+        /// <summary>
+        /// Class for 4 types.
+        /// </summary>
+        /// <typeparam name="T1">Type 1.</typeparam>
         private class Items<T1>
         {
+            /// <summary>
+            /// Gets or sets type A.
+            /// </summary>
             public T1 A { get; set; }
         }
 
+        /// <summary>
+        /// Class for 4 types.
+        /// </summary>
+        /// <typeparam name="T1">Type 1.</typeparam>
+        /// <typeparam name="T2">Type 2.</typeparam>
         private class Items<T1, T2>
         {
+            /// <summary>
+            /// Gets or sets type A.
+            /// </summary>
             public T1 A { get; set; }
 
+            /// <summary>
+            /// Gets or sets type B.
+            /// </summary>
             public T2 B { get; set; }
         }
 
+        /// <summary>
+        /// Class for 4 types.
+        /// </summary>
+        /// <typeparam name="T1">Type 1.</typeparam>
+        /// <typeparam name="T2">Type 2.</typeparam>
+        /// <typeparam name="T3">Type 3.</typeparam>
         private class Items<T1, T2, T3>
         {
+            /// <summary>
+            /// Gets or sets type A.
+            /// </summary>
             public T1 A { get; set; }
 
+            /// <summary>
+            /// Gets or sets type B.
+            /// </summary>
             public T2 B { get; set; }
 
+            /// <summary>
+            /// Gets or sets type C.
+            /// </summary>
             public T3 C { get; set; }
         }
 
+        /// <summary>
+        /// Class for 4 types.
+        /// </summary>
+        /// <typeparam name="T1">Type 1.</typeparam>
+        /// <typeparam name="T2">Type 2.</typeparam>
+        /// <typeparam name="T3">Type 3.</typeparam>
+        /// <typeparam name="T4">Type 4.</typeparam>
         private class Items<T1, T2, T3, T4>
         {
+            /// <summary>
+            /// Gets or sets type A.
+            /// </summary>
             public T1 A { get; set; }
 
+            /// <summary>
+            /// Gets or sets type B.
+            /// </summary>
             public T2 B { get; set; }
 
+            /// <summary>
+            /// Gets or sets type C.
+            /// </summary>
             public T3 C { get; set; }
 
+            /// <summary>
+            /// Gets or sets type D.
+            /// </summary>
             public T4 D { get; set; }
         }
     }

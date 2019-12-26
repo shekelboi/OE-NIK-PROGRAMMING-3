@@ -1,28 +1,36 @@
-﻿namespace OENIK_PROG3_2019_2_GO10DV
+﻿// <copyright file="Program.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace OENIK_PROG3_2019_2_GO10DV
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Languages.Repository;
     using Languages.Data;
-    using System.Reflection;
-
+    using Languages.Repository;
 
     /// <summary>
     /// The main program.
     /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Instance for calling queries.
+        /// </summary>
         private static Queries q = new Queries();
 
+        /// <summary>
+        /// Main function.
+        /// </summary>
+        /// <param name="args">Passing arguments while opening the method from console.</param>
         private static void Main(string[] args)
         {
             q.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
 
+        /// <summary>
+        /// Main menu.
+        /// </summary>
         private static void Menu()
         {
             Console.Clear();
@@ -74,6 +82,9 @@
             Menu();
         }
 
+        /// <summary>
+        /// Query menu.
+        /// </summary>
         private static void QueryMenu()
         {
             Console.Clear();
@@ -134,6 +145,10 @@
             Menu();
         }
 
+        /// <summary>
+        /// Running different operations on different tables.
+        /// </summary>
+        /// <param name="o">Type of operation.</param>
         private static void Operations(Operation o)
         {
             Console.Clear();
@@ -260,6 +275,9 @@
             }
         }
 
+        /// <summary>
+        /// Prompting for a language family-language link table.
+        /// </summary>
         private static void AddLangfamLangLinkPrompt()
         {
             langfam_lang_link lll = new langfam_lang_link();
@@ -306,6 +324,9 @@
             }
         }
 
+        /// <summary>
+        /// Prompting for a country table.
+        /// </summary>
         private static void AddCountryLangLinkPrompt()
         {
             country_lang_link cll = new country_lang_link();
@@ -354,6 +375,9 @@
             q.AddCountryLangLink(cll);
         }
 
+        /// <summary>
+        /// Prompting for a language family table.
+        /// </summary>
         private static void AddLanguageFamilyPrompt()
         {
             language_family lf = new language_family();
@@ -468,6 +492,9 @@
             q.AddLanguageFamily(lf);
         }
 
+        /// <summary>
+        /// Prompting for a language table.
+        /// </summary>
         private static void AddLanguagePrompt()
         {
             language l = new language();
@@ -595,6 +622,9 @@
             q.AddLanguage(l);
         }
 
+        /// <summary>
+        /// Prompting for a country table.
+        /// </summary>
         private static void AddCountryPrompt()
         {
             country c = new country();
@@ -682,6 +712,10 @@
             q.AddCountry(c);
         }
 
+        /// <summary>
+        /// Prompting for table to remove from.
+        /// </summary>
+        /// <param name="table">Table to remove from.</param>
         private static void RemovePrompt(string table)
         {
             Console.Write("WHERE: ");
@@ -691,6 +725,10 @@
             q.Remove(table, where, value);
         }
 
+        /// <summary>
+        /// Prompting for table entry modification.
+        /// </summary>
+        /// <param name="table">Table in which we intend to modify an entry.</param>
         private static void ModifyPrompt(string table)
         {
             Console.Write("WHERE: ");
@@ -704,6 +742,9 @@
             q.Modify(table, where, value, field, newValue);
         }
 
+        /// <summary>
+        /// Invalid key pressed.
+        /// </summary>
         private static void Invalid()
         {
             Console.WriteLine("Invalid key. Press any key to return to the main menu.");
