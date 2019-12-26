@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Languages.Logic
+﻿namespace Languages.Logic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Exception for empty input.
     /// </summary>
@@ -19,7 +19,6 @@ namespace Languages.Logic
         public EmptyInputException(string message = "The input was empty.")
             : base(message)
         {
-
         }
     }
 }

@@ -15,18 +15,11 @@
     /// </summary>
     public class Program
     {
+        private static Queries q = new Queries();
+
         private static void Main(string[] args)
         {
-            ////////////Activator.CreateInstance()
-            //DatabaseEntities db = new DatabaseEntities();
-            //Type t = (new country()).GetType();
-            //System.Reflection.PropertyInfo[] pi = t.GetProperties();
-            //foreach (var item in pi)
-            //{
-            //    Console.WriteLine(item.PropertyType + "\t" + item.Name);
-            //}
-            //Console.ReadLine();
-            Queries.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
+            q.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
 
@@ -47,7 +40,7 @@
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Console.WriteLine(Queries.ListAll());
+                    Console.WriteLine(q.ListAll());
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
@@ -101,23 +94,23 @@
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        Console.WriteLine(Queries.NumberOfSpeakersRollup());
+                        Console.WriteLine(q.NumberOfSpeakersRollup());
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        Console.WriteLine(Queries.LanguageFamilies());
+                        Console.WriteLine(q.LanguageFamilies());
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        Console.WriteLine(Queries.OfficialLanguages());
+                        Console.WriteLine(q.OfficialLanguages());
                         break;
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        Console.WriteLine(Queries.LanguagesByDifficulty());
+                        Console.WriteLine(q.LanguagesByDifficulty());
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
-                        Console.WriteLine(Queries.NumberOfSpeakers());
+                        Console.WriteLine(q.NumberOfSpeakers());
                         break;
                     case ConsoleKey.D6:
                     case ConsoleKey.NumPad6:
@@ -358,7 +351,7 @@
                 throw new EmptyInputException();
             }
 
-            Queries.AddCountryLangLink(cll);
+            q.AddCountryLangLink(cll);
         }
 
         private static void AddLanguageFamilyPrompt()
@@ -472,7 +465,7 @@
                 throw new EmptyInputException();
             }
 
-            Queries.AddLanguageFamily(lf);
+            q.AddLanguageFamily(lf);
         }
 
         private static void AddLanguagePrompt()
@@ -599,7 +592,7 @@
                 throw new EmptyInputException();
             }
 
-            Queries.AddLanguage(l);
+            q.AddLanguage(l);
         }
 
         private static void AddCountryPrompt()
@@ -686,7 +679,7 @@
                 throw new EmptyInputException();
             }
 
-            Queries.AddCountry(c);
+            q.AddCountry(c);
         }
 
         private static void RemovePrompt(string table)
@@ -695,7 +688,7 @@
             string where = Console.ReadLine();
             Console.Write("EQUAL TO: ");
             string value = Console.ReadLine();
-            Queries.Remove(table, where, value);
+            q.Remove(table, where, value);
         }
 
         private static void ModifyPrompt(string table)
@@ -708,7 +701,7 @@
             string field = Console.ReadLine();
             Console.Write("NEW VALUE: ");
             string newValue = Console.ReadLine();
-            Queries.Modify(table, where, value, field, newValue);
+            q.Modify(table, where, value, field, newValue);
         }
 
         private static void Invalid()
