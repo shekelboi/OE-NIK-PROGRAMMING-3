@@ -5,7 +5,9 @@
 namespace Languages.Repository
 {
     using System.IO;
+    using System.Linq;
     using Languages.Data;
+    using System.Collections.Generic;
 
     /// <summary>
     /// A class for the queries.
@@ -184,6 +186,7 @@ namespace Languages.Repository
                 "join country on country.id = country_lang_link.country_id " +
                 "group by language.name " +
                 "order by sum(country.population) desc;";
+
             var q = this.db.Database.SqlQuery<Items<string, int>>(sql);
 
             string header = string.Format("{0,20} {1, 20}", "Language", "Speakers");
