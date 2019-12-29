@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmptyInputException.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,9 +122,9 @@
       <Project>{4796399f-e55e-4143-a5a3-392a77456f1a}</Project>
       <Name>Languages.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Languages.Repository\Languages.Repository.csproj">
-      <Project>{7c7d4baa-7bfe-4864-9f5a-ff64516d0106}</Project>
-      <Name>Languages.Repository</Name>
+    <ProjectReference Include="..\Languages.Logic\Languages.Logic.csproj">
+      <Project>{19cdba3c-8c34-4ff3-9ba5-33c3d0154ce3}</Project>
+      <Name>Languages.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

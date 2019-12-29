@@ -5,6 +5,7 @@
 namespace Languages.Repository
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -14,7 +15,8 @@ namespace Languages.Repository
     /// <summary>
     /// Interface for business logic.
     /// </summary>
-    public interface IRepository
+    public interface IRepository<T>
+        where T : IEnumerable
     {
         /// <summary>
         /// Initializing the database.
@@ -73,7 +75,7 @@ namespace Languages.Repository
         /// Listing the names and the populations of countries.
         /// </summary>
         /// <returns>Returns result.</returns>
-        string NamesOfCountries();
+        T NamesOfCountries();
 
         /// <summary>
         /// Number of speakers based on the language or the difficulty.
@@ -109,6 +111,14 @@ namespace Languages.Repository
         /// Listing all the entries.
         /// </summary>
         /// <returns>Returns result.</returns>
-        string ListAll();
+        IQueryable<T> GetAll();
+
+        T GetOne(int id);
+
+        void Remove(T entity);
+
+        void Remove(int id);
+
+        void Insert(T entity);
     }
 }

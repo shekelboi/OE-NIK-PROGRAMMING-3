@@ -12,16 +12,29 @@ namespace Languages.Repository
     /// <summary>
     /// A class for the queries.
     /// </summary>
-    public class Queries : IRepository
+    public class Queries
     {
         /// <summary>
         /// New database entity.
         /// </summary>
         private DatabaseEntities db = new DatabaseEntities();
 
+        public IQueryable GetAll()
+        {
+            List<object> l = new List<object>();
+            l.AddRange(this.db.country.ToList());
+            l.AddRange(this.db.country_lang_link.ToList());
+            l.AddRange(this.db.langfam_lang_link.ToList());
+            l.AddRange(this.db.language.ToList());
+            l.AddRange(this.db.language_family.ToList());
+
+            return l.AsQueryable();
+        }
+
         /// <inheritdoc/>
         public void InitDB()
         {
+            DatabaseEntities db = new DatabaseEntities();
             this.db.Database.ExecuteSqlCommand(File.ReadAllText(@"..\..\..\Languages.Data\SQL\Table creation.sql")); // Because of some caching problem sometimes it doesn't work, if that's the case just modify anything in the source and rebuild the solution.
             this.db.SaveChanges();
         }
@@ -76,39 +89,31 @@ namespace Languages.Repository
         }
 
         /// <inheritdoc/>
-        public string NamesOfCountries()
+        public IQueryable NamesOfCountries()
         {
-            var q = this.db.Database.SqlQuery<Items<string, int>>("select name as [A], population as [B] from country;");
-
-            string result = string.Empty;
-
-            foreach (var item in q)
-            {
-                result += string.Format("{0, 15} {1, 20}", item.A, item.B);
-            }
-
-            return result;
+            return db.country.AsQueryable();
         }
 
-        /// <inheritdoc/>
-        public string NumberOfSpeakersRollup()
-        {
-            string sql = "select language.name as [A], language.difficulty as [B], sum(convert(bigint, language.number_of_speakers))" +
-                "as [C] from language group by rollup(language.difficulty, language.name);";
-            var q = this.db.Database.SqlQuery<Items<string, string, long>>(sql);
+        // NEM KELL
+        ///// <inheritdoc/>
+        //public string NumberOfSpeakersRollup()
+        //{
+        //    string sql = "select language.name as [A], language.difficulty as [B], sum(convert(bigint, language.number_of_speakers))" +
+        //        "as [C] from language group by rollup(language.difficulty, language.name);";
+        //    var q = this.db.Database.SqlQuery<Items<string, string, long>>(sql);
 
-            string header = string.Format("{0,20} {1,10} {2,20}", "Language", "Difficulty", "No. of speakers");
+        //    string header = string.Format("{0,20} {1,10} {2,20}", "Language", "Difficulty", "No. of speakers");
 
-            string result = header + "\n";
+        //    string result = header + "\n";
 
-            foreach (var item in q)
-            {
-                string s = string.Format("{0,20} {1,10} {2,20}", item.A, item.B, item.C) + "\n";
-                result += s;
-            }
+        //    foreach (var item in q)
+        //    {
+        //        string s = string.Format("{0,20} {1,10} {2,20}", item.A, item.B, item.C) + "\n";
+        //        result += s;
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <inheritdoc/>
         public string LanguageFamilies()
@@ -196,63 +201,6 @@ namespace Languages.Repository
             foreach (var item in q)
             {
                 string s = string.Format("{0,20} {1, 20}", item.A, item.B) + "\n";
-                result += s;
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public string ListAll()
-        {
-            string result = string.Empty;
-            result += "========Countries========" + "\n";
-
-            result += string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", "ID", "Name", "Population", "Capital", "Continent", "Area") + "\n\n";
-
-            foreach (var c in this.db.country)
-            {
-                string s = string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", c.id, c.name, c.population, c.capital, c.continent, c.area) + "\n";
-                result += s;
-            }
-
-            result += "========Language families========" + "\n";
-
-            result += string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", "ID", "Name", "ISO", "No. of speakers", "Rank by no. of speakers", "No. of languages", "Rank by no. of languages") + "\n\n";
-
-            foreach (var l in this.db.language_family)
-            {
-                string s = string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", l.id, l.name, l.iso_code, l.number_of_speakers, l.rank_by_no_speakers, l.number_of_languages, l.rank_by_no_languages) + "\n";
-                result += s;
-            }
-
-            result += "========Languages========" + "\n";
-
-            result += string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", "ID", "Name", "Agglutinative", "No. of tenses", "No. noun decl. cases", "Difficulty", "No. of speakers", "Rank by no. of speakers") + "\n\n";
-
-            foreach (var l in this.db.language)
-            {
-                string s = string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", l.id, l.name, l.agglutinative, l.number_of_tenses, l.no_of_noun_declension_cases, l.difficulty, l.number_of_speakers, l.rank_by_no_speakers) + "\n";
-                result += s;
-            }
-
-            result += "========country_lang_link========" + "\n";
-
-            result += string.Format("{0, 5} {1, 15} {2, 15}", "ID", "country_id", "language_id") + "\n\n";
-
-            foreach (var cl in this.db.country_lang_link)
-            {
-                string s = string.Format("{0, 5} {1, 15} {2, 15}", cl.id, cl.country_id, cl.lang_id) + "\n";
-                result += s;
-            }
-
-            result += "========langfam_lang_link========" + "\n";
-
-            result += string.Format("{0, 5} {1, 15} {2, 20}", "ID", "language_id", "language_family_id") + "\n\n";
-
-            foreach (var ll in this.db.langfam_lang_link)
-            {
-                string s = string.Format("{0, 5} {1, 15} {2, 15}", ll.id, ll.lang_id, ll.lang_id) + "\n";
                 result += s;
             }
 

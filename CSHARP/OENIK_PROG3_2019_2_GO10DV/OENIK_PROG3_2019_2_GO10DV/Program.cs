@@ -5,18 +5,15 @@
 namespace OENIK_PROG3_2019_2_GO10DV
 {
     using System;
+    using System.Linq;
     using Languages.Data;
-    using Languages.Repository;
+    using Languages.Logic;
 
     /// <summary>
     /// The main program.
     /// </summary>
     public class Program
     {
-        /// <summary>
-        /// Instance for calling queries.
-        /// </summary>
-        private static Queries q = new Queries();
 
         /// <summary>
         /// Main function.
@@ -24,7 +21,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
         /// <param name="args">Passing arguments while opening the method from console.</param>
         private static void Main(string[] args)
         {
-            q.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
+            Logic.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
 
@@ -48,7 +45,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Console.WriteLine(q.ListAll());
+                    Console.WriteLine(ListAll(Logic.GetAll()));
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
@@ -105,23 +102,23 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        Console.WriteLine(q.NumberOfSpeakersRollup());
+                        //Console.WriteLine(q.NumberOfSpeakersRollup());
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        Console.WriteLine(q.LanguageFamilies());
+                        Console.WriteLine(Logic.LanguageFamilies());
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        Console.WriteLine(q.OfficialLanguages());
+                        //Console.WriteLine(q.OfficialLanguages());
                         break;
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        Console.WriteLine(q.LanguagesByDifficulty());
+                        //Console.WriteLine(q.LanguagesByDifficulty());
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
-                        Console.WriteLine(q.NumberOfSpeakers());
+                        //Console.WriteLine(q.NumberOfSpeakers());
                         break;
                     case ConsoleKey.D6:
                     case ConsoleKey.NumPad6:
@@ -276,6 +273,67 @@ namespace OENIK_PROG3_2019_2_GO10DV
         }
 
         /// <summary>
+        /// Listing all the entries.
+        /// </summary>
+        /// <param name="db">The returned query.</param>
+        /// <returns>Returns all the data in a string..</returns>
+        private static string ListAll(IQueryable db)
+        {
+            string result = string.Empty;
+            result += "========Countries========" + "\n";
+
+            result += string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", "ID", "Name", "Population", "Capital", "Continent", "Area") + "\n\n";
+
+            foreach (var c in db.OfType<country>())
+            {
+                string s = string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", c.id, c.name, c.population, c.capital, c.continent, c.area) + "\n";
+                result += s;
+            }
+
+            result += "========Language families========" + "\n";
+
+            result += string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", "ID", "Name", "ISO", "No. of speakers", "Rank by no. of speakers", "No. of languages", "Rank by no. of languages") + "\n\n";
+
+            foreach (var l in db.OfType<language_family>())
+            {
+                string s = string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", l.id, l.name, l.iso_code, l.number_of_speakers, l.rank_by_no_speakers, l.number_of_languages, l.rank_by_no_languages) + "\n";
+                result += s;
+            }
+
+            result += "========Languages========" + "\n";
+
+            result += string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", "ID", "Name", "Agglutinative", "No. of tenses", "No. noun decl. cases", "Difficulty", "No. of speakers", "Rank by no. of speakers") + "\n\n";
+
+            foreach (var l in db.OfType<language>())
+            {
+                string s = string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", l.id, l.name, l.agglutinative, l.number_of_tenses, l.no_of_noun_declension_cases, l.difficulty, l.number_of_speakers, l.rank_by_no_speakers) + "\n";
+                result += s;
+            }
+
+            result += "========country_lang_link========" + "\n";
+
+            result += string.Format("{0, 5} {1, 15} {2, 15}", "ID", "country_id", "language_id") + "\n\n";
+
+            foreach (var cl in db.OfType<country_lang_link>())
+            {
+                string s = string.Format("{0, 5} {1, 15} {2, 15}", cl.id, cl.country_id, cl.lang_id) + "\n";
+                result += s;
+            }
+
+            result += "========langfam_lang_link========" + "\n";
+
+            result += string.Format("{0, 5} {1, 15} {2, 20}", "ID", "language_id", "language_family_id") + "\n\n";
+
+            foreach (var ll in db.OfType<langfam_lang_link>())
+            {
+                string s = string.Format("{0, 5} {1, 15} {2, 15}", ll.id, ll.lang_id, ll.lang_id) + "\n";
+                result += s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Prompting for a language family-language link table.
         /// </summary>
         private static void AddLangfamLangLinkPrompt()
@@ -322,6 +380,8 @@ namespace OENIK_PROG3_2019_2_GO10DV
             {
                 throw new EmptyInputException();
             }
+
+            Logic.AddLangfamLangLink(lll);
         }
 
         /// <summary>
@@ -372,7 +432,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            q.AddCountryLangLink(cll);
+            Logic.AddCountryLangLink(cll);
         }
 
         /// <summary>
@@ -489,7 +549,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            q.AddLanguageFamily(lf);
+            Logic.AddLanguageFamily(lf);
         }
 
         /// <summary>
@@ -619,7 +679,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            q.AddLanguage(l);
+            Logic.AddLanguage(l);
         }
 
         /// <summary>
@@ -709,7 +769,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            q.AddCountry(c);
+            Logic.AddCountry(c);
         }
 
         /// <summary>
@@ -722,7 +782,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             string where = Console.ReadLine();
             Console.Write("EQUAL TO: ");
             string value = Console.ReadLine();
-            q.Remove(table, where, value);
+            Logic.Remove(table, where, value);
         }
 
         /// <summary>
@@ -739,7 +799,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             string field = Console.ReadLine();
             Console.Write("NEW VALUE: ");
             string newValue = Console.ReadLine();
-            q.Modify(table, where, value, field, newValue);
+            Logic.Modify(table, where, value, field, newValue);
         }
 
         /// <summary>
