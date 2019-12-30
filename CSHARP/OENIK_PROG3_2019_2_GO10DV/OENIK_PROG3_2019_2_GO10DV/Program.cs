@@ -14,14 +14,14 @@ namespace OENIK_PROG3_2019_2_GO10DV
     /// </summary>
     public class Program
     {
-
+        static Logic logic = new Logic();
         /// <summary>
         /// Main function.
         /// </summary>
         /// <param name="args">Passing arguments while opening the method from console.</param>
         private static void Main(string[] args)
         {
-            Logic.InitDB(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
+            logic.InitDb(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
             Menu();
         }
 
@@ -45,7 +45,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Console.WriteLine(ListAll(Logic.GetAll()));
+                    Console.WriteLine(ListAll(logic.GetAll()));
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
@@ -85,14 +85,12 @@ namespace OENIK_PROG3_2019_2_GO10DV
         private static void QueryMenu()
         {
             Console.Clear();
-
-            Console.WriteLine("1. Rolling up languages and their difficulties");
-            Console.WriteLine("2. Language and the language families they belong to");
-            Console.WriteLine("3. Official languages by country");
-            Console.WriteLine("4. Number of languages by difficulty");
-            Console.WriteLine("5. Number of speakers by language");
-            Console.WriteLine("6. Main menu");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("1. Language and the language families they belong to");
+            Console.WriteLine("2. Official languages by country");
+            Console.WriteLine("3. Number of languages by difficulty");
+            Console.WriteLine("4. Number of speakers by language");
+            Console.WriteLine("5. Main menu");
+            Console.WriteLine("6. Exit");
 
             var input = Console.ReadKey(true).Key;
             Console.Clear();
@@ -102,30 +100,26 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        //Console.WriteLine(q.NumberOfSpeakersRollup());
+                        Console.WriteLine(DisplayLanguageFamilies());
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        Console.WriteLine(Logic.LanguageFamilies());
+                        Console.WriteLine(DisplayOfficialLanguages());
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        //Console.WriteLine(q.OfficialLanguages());
+                        Console.WriteLine(DisplayLanguagesByDifficulty());
                         break;
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        //Console.WriteLine(q.LanguagesByDifficulty());
+                        Console.WriteLine(DisplayNumberOfSpeakers());
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
-                        //Console.WriteLine(q.NumberOfSpeakers());
+                        Menu();
                         break;
                     case ConsoleKey.D6:
                     case ConsoleKey.NumPad6:
-                        Menu();
-                        break;
-                    case ConsoleKey.D7:
-                    case ConsoleKey.NumPad7:
                         Environment.Exit(0);
                         break;
                     default:
@@ -273,6 +267,87 @@ namespace OENIK_PROG3_2019_2_GO10DV
         }
 
         /// <summary>
+        /// Displaying the languages and their language families.
+        /// </summary>
+        /// <returns>Results in a string.</returns>
+        private static string DisplayLanguageFamilies()
+        {
+            var q = logic.LanguageFamilies();
+
+            string header = string.Format("{0,20} {1,30}", "Language", "Language family");
+
+            string result = header + "\n";
+
+            foreach (var item in q)
+            {
+                string s = string.Format("{0,20} {1,30}", item.Language_name, item.Langfam_name) + "\n";
+                result += s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Displays the number of languages by difficulty.
+        /// </summary>
+        /// <returns>The results in a string.</returns>
+        private static string DisplayLanguagesByDifficulty()
+        {
+            var q = logic.LanguagesByDifficulty();
+
+            string header = string.Format("{0,6} {1, 6}", "Difficulty", "No. of speakers");
+
+            string result = header + "\n";
+
+            foreach (var item in q)
+            {
+                string s = string.Format("{0,6} {1, 6}", item.Difficulty, item.Sum) + "\n";
+                result += s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Displays the official languages of each country in a formatted manner.
+        /// </summary>
+        /// <returns>The results in a string.</returns>
+        private static string DisplayOfficialLanguages()
+        {
+            string header = string.Format("{0,20}", "Official language");
+
+            string result = header + "\n";
+
+            foreach (var item in logic.OfficialLanguages())
+            {
+                string s = item.Country + " has " + item.Language + " as their official language." + "\n";
+                result += s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Displays the number of speakers by difficulty levels.
+        /// </summary>
+        /// <returns>Returns the result in a string.</returns>
+        private static string DisplayNumberOfSpeakers()
+        {
+            var q = logic.NumberOfSpeakers();
+            string header = string.Format("{0,10} {1, 20}", "Difficulty", "Speakers");
+
+            string result = header + "\n";
+
+            foreach (var item in q)
+            {
+                string s = string.Format("{0,10} {1, 20}", item.Difficulty, item.NumberOfSpeakers) + "\n";
+                result += s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Listing all the entries.
         /// </summary>
         /// <param name="db">The returned query.</param>
@@ -381,7 +456,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            Logic.AddLangfamLangLink(lll);
+            logic.AddLangfamLangLink(lll);
         }
 
         /// <summary>
@@ -432,7 +507,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            Logic.AddCountryLangLink(cll);
+            logic.AddCountryLangLink(cll);
         }
 
         /// <summary>
@@ -549,7 +624,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            Logic.AddLanguageFamily(lf);
+            logic.AddLanguageFamily(lf);
         }
 
         /// <summary>
@@ -679,7 +754,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            Logic.AddLanguage(l);
+            logic.AddLanguage(l);
         }
 
         /// <summary>
@@ -769,7 +844,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            Logic.AddCountry(c);
+            logic.AddCountry(c);
         }
 
         /// <summary>
@@ -782,7 +857,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             string where = Console.ReadLine();
             Console.Write("EQUAL TO: ");
             string value = Console.ReadLine();
-            Logic.Remove(table, where, value);
+            logic.Remove(table, where, value);
         }
 
         /// <summary>
@@ -799,7 +874,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             string field = Console.ReadLine();
             Console.Write("NEW VALUE: ");
             string newValue = Console.ReadLine();
-            Logic.Modify(table, where, value, field, newValue);
+            logic.Modify(table, where, value, field, newValue);
         }
 
         /// <summary>

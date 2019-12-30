@@ -53,6 +53,34 @@ namespace Languages.Repository
             this.db.SaveChanges();
         }
 
+        public void Insert<T>(T entity)
+        {
+            if (entity is language)
+            {
+                this.db.language.Add(entity as language);
+            }
+            else if (entity is country)
+            {
+                this.db.country.Add(entity as country);
+            }
+            else if (entity is language_family)
+            {
+                this.db.language_family.Add(entity as language_family);
+            }
+            else if (entity is langfam_lang_link)
+            {
+                this.db.langfam_lang_link.Add(entity as langfam_lang_link);
+            }
+            else if (entity is country_lang_link)
+            {
+                this.db.country_lang_link.Add(entity as country_lang_link);
+            }
+            else
+            {
+                throw new System.Exception();
+            }
+        }
+
         /// <inheritdoc/>
         public void AddLangfamLangLink(langfam_lang_link lll)
         {
@@ -93,92 +121,7 @@ namespace Languages.Repository
         {
             return db.country.AsQueryable();
         }
-
-        // NEM KELL
-        ///// <inheritdoc/>
-        //public string NumberOfSpeakersRollup()
-        //{
-        //    string sql = "select language.name as [A], language.difficulty as [B], sum(convert(bigint, language.number_of_speakers))" +
-        //        "as [C] from language group by rollup(language.difficulty, language.name);";
-        //    var q = this.db.Database.SqlQuery<Items<string, string, long>>(sql);
-
-        //    string header = string.Format("{0,20} {1,10} {2,20}", "Language", "Difficulty", "No. of speakers");
-
-        //    string result = header + "\n";
-
-        //    foreach (var item in q)
-        //    {
-        //        string s = string.Format("{0,20} {1,10} {2,20}", item.A, item.B, item.C) + "\n";
-        //        result += s;
-        //    }
-
-        //    return result;
-        //}
-
-        /// <inheritdoc/>
-        public string LanguageFamilies()
-        {
-            string sql = "select language.name as [A], language_family.name as [B] " +
-                "from language join langfam_lang_link on language.id = langfam_lang_link.lang_id " +
-                "join language_family on language_family.id = langfam_lang_link.langfam_id;";
-            var q = this.db.Database.SqlQuery<Items<string, string>>(sql);
-
-            string header = string.Format("{0,20} {1,30}", "Language", "Language family");
-
-            string result = header + "\n";
-
-            foreach (var item in q)
-            {
-                string s = string.Format("{0,20} {1,30}", item.A, item.B) + "\n";
-                result += s;
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public string OfficialLanguages()
-        {
-            string sql = "select concat(country.name, ' has ' + language.name + ' as their official language.') as [A] " +
-                "from language join langfam_lang_link on language.id = langfam_lang_link.lang_id " +
-                "join language_family on language_family.id = langfam_lang_link.langfam_id " +
-                "join country_lang_link on language.id = country_lang_link.lang_id " +
-                "join country on country.id = country_lang_link.country_id";
-            var q = this.db.Database.SqlQuery<Items<string>>(sql);
-
-            string header = string.Format("{0,20}", "Official language");
-
-            string result = header + "\n";
-
-            foreach (var item in q)
-            {
-                string s = string.Format("{0,20}", item.A) + "\n";
-                result += s;
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public string LanguagesByDifficulty()
-        {
-            string sql = "select language.difficulty as [A], count(language.id) as [B] " +
-                "from language group by language.difficulty " +
-                "order by [B] desc;";
-            var q = this.db.Database.SqlQuery<Items<string, int>>(sql);
-
-            string header = string.Format("{0,6} {1, 6}", "Difficulty", "No. of speakers");
-
-            string result = header + "\n";
-
-            foreach (var item in q)
-            {
-                string s = string.Format("{0,6} {1, 6}", item.A, item.B) + "\n";
-                result += s;
-            }
-
-            return result;
-        }
+        /*
 
         /// <inheritdoc/>
         public string NumberOfSpeakers()
@@ -205,90 +148,6 @@ namespace Languages.Repository
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Class for 4 types.
-        /// </summary>
-        /// <typeparam name="T1">Type 1.</typeparam>
-        private class Items<T1>
-        {
-            /// <summary>
-            /// Gets or sets type A.
-            /// </summary>
-            public T1 A { get; set; }
-        }
-
-        /// <summary>
-        /// Class for 4 types.
-        /// </summary>
-        /// <typeparam name="T1">Type 1.</typeparam>
-        /// <typeparam name="T2">Type 2.</typeparam>
-        private class Items<T1, T2>
-        {
-            /// <summary>
-            /// Gets or sets type A.
-            /// </summary>
-            public T1 A { get; set; }
-
-            /// <summary>
-            /// Gets or sets type B.
-            /// </summary>
-            public T2 B { get; set; }
-        }
-
-        /// <summary>
-        /// Class for 4 types.
-        /// </summary>
-        /// <typeparam name="T1">Type 1.</typeparam>
-        /// <typeparam name="T2">Type 2.</typeparam>
-        /// <typeparam name="T3">Type 3.</typeparam>
-        private class Items<T1, T2, T3>
-        {
-            /// <summary>
-            /// Gets or sets type A.
-            /// </summary>
-            public T1 A { get; set; }
-
-            /// <summary>
-            /// Gets or sets type B.
-            /// </summary>
-            public T2 B { get; set; }
-
-            /// <summary>
-            /// Gets or sets type C.
-            /// </summary>
-            public T3 C { get; set; }
-        }
-
-        /// <summary>
-        /// Class for 4 types.
-        /// </summary>
-        /// <typeparam name="T1">Type 1.</typeparam>
-        /// <typeparam name="T2">Type 2.</typeparam>
-        /// <typeparam name="T3">Type 3.</typeparam>
-        /// <typeparam name="T4">Type 4.</typeparam>
-        private class Items<T1, T2, T3, T4>
-        {
-            /// <summary>
-            /// Gets or sets type A.
-            /// </summary>
-            public T1 A { get; set; }
-
-            /// <summary>
-            /// Gets or sets type B.
-            /// </summary>
-            public T2 B { get; set; }
-
-            /// <summary>
-            /// Gets or sets type C.
-            /// </summary>
-            public T3 C { get; set; }
-
-            /// <summary>
-            /// Gets or sets type D.
-            /// </summary>
-            public T4 D { get; set; }
-        }
+        }*/
     }
 }

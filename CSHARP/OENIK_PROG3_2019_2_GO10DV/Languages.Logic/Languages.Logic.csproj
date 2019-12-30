@@ -163,6 +163,10 @@
     <Compile Include="ILogic.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QLanguageFamilies.cs" />
+    <Compile Include="QLanguagesByDifficulty.cs" />
+    <Compile Include="QNumberOfSpeakers.cs" />
+    <Compile Include="QOfficialLanguages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
