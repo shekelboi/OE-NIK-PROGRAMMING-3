@@ -160,13 +160,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILogic.cs" />
+    <Compile Include="ILogic\ILogic.cs" />
+    <Compile Include="ILogic\ILanguageLogic.cs" />
     <Compile Include="Logic.cs" />
+    <Compile Include="Logics\CountryLangLinkLogic.cs" />
+    <Compile Include="Logics\CountryLogic.cs" />
+    <Compile Include="Logics\LangfamLangLinkLogic.cs" />
+    <Compile Include="Logics\LanguageFamilyLogic.cs" />
+    <Compile Include="Logics\LanguageLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QLanguageFamilies.cs" />
-    <Compile Include="QLanguagesByDifficulty.cs" />
-    <Compile Include="QNumberOfSpeakers.cs" />
-    <Compile Include="QOfficialLanguages.cs" />
+    <Compile Include="Queries\QLanguageFamilies.cs" />
+    <Compile Include="Queries\QLanguagesByDifficulty.cs" />
+    <Compile Include="Queries\QNumberOfSpeakers.cs" />
+    <Compile Include="Queries\QOfficialLanguages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -202,6 +208,7 @@
       <Name>Languages.Repository</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

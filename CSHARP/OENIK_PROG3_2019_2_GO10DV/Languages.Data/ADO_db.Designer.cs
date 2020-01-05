@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\DOKUMENTUMOK\GIT\oenik_prog3_2019_1_go10dv\CSHARP\OENIK_PROG3_2019_1_GO10DV\Languages.Data\ADO_db.edmx'.
+﻿// T4 code generation is enabled for model 'D:\DOKUMENTUMOK\GIT\oenik_prog3_2019_2_go10dv\CSHARP\OENIK_PROG3_2019_2_GO10DV\Languages.Data\ADO_DB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

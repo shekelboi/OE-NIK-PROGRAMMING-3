@@ -11,8 +11,7 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class language
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,23 +22,12 @@ namespace Languages.Data
         }
     
         public int id { get; set; }
-        [StringLength(50)]
-        [Required()]
         public string name { get; set; }
-        [IsYorN()]
-        [StringLength(1)]
-        [Required()]
         public string agglutinative { get; set; }
-        [Required()]
         public int number_of_tenses { get; set; }
-        [Required()]
         public int no_of_noun_declension_cases { get; set; }
-        [StringLength(20)]
-        [Required()]
         public string difficulty { get; set; }
-        [Required()]
         public int number_of_speakers { get; set; }
-        [Required()]
         public int rank_by_no_speakers { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

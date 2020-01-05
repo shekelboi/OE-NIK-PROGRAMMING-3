@@ -12,7 +12,7 @@ namespace Languages.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class DatabaseEntities : DbContext
     {
         public DatabaseEntities()
@@ -24,7 +24,7 @@ namespace Languages.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<country> country { get; set; }
         public virtual DbSet<country_lang_link> country_lang_link { get; set; }
         public virtual DbSet<langfam_lang_link> langfam_lang_link { get; set; }

@@ -67,50 +67,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ADO_db.Context.cs">
+    <Compile Include="ADO_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADO_db.Context.tt</DependentUpon>
+      <DependentUpon>ADO_DB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ADO_db.cs">
+    <Compile Include="ADO_DB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ADO_db.Designer.cs">
+    <Compile Include="ADO_DB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADO_db.edmx</DependentUpon>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <DependentUpon>ADO_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="country.cs">
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="country_lang_link.cs">
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="IsYorN.cs" />
     <Compile Include="langfam_lang_link.cs">
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="language.cs">
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="language_family.cs">
-      <DependentUpon>ADO_db.tt</DependentUpon>
+      <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ADO_db.Context.tt">
+    <Content Include="ADO_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ADO_db.Context.cs</LastGenOutput>
-      <DependentUpon>ADO_db.edmx</DependentUpon>
+      <DependentUpon>ADO_DB.edmx</DependentUpon>
+      <LastGenOutput>ADO_DB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ADO_db.tt">
+    <Content Include="ADO_DB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ADO_db.edmx</DependentUpon>
-      <LastGenOutput>ADO_db.cs</LastGenOutput>
+      <DependentUpon>ADO_DB.edmx</DependentUpon>
+      <LastGenOutput>ADO_DB.cs</LastGenOutput>
     </Content>
     <Content Include="Database.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -122,15 +121,12 @@
     <Content Include="SQL\Table creation.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ADO_db.edmx">
+    <EntityDeploy Include="ADO_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ADO_db.Designer.cs</LastGenOutput>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <LastGenOutput>ADO_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ADO_db.edmx.diagram">
-      <DependentUpon>ADO_db.edmx</DependentUpon>
+    <None Include="ADO_DB.edmx.diagram">
+      <DependentUpon>ADO_DB.edmx</DependentUpon>
     </None>
     <None Include="App.Config" />
     <None Include="oenik.ruleset" />

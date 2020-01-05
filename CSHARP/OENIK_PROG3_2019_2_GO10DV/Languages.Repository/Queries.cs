@@ -7,12 +7,14 @@ namespace Languages.Repository
     using System.IO;
     using System.Linq;
     using Languages.Data;
+    using System.Data.Entity;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// A class for the queries.
     /// </summary>
-    public class Queries
+    public class Queries : IRepository
     {
         /// <summary>
         /// New database entity.
@@ -31,12 +33,10 @@ namespace Languages.Repository
             return l.AsQueryable();
         }
 
-        /// <inheritdoc/>
-        public void InitDB()
+        public IQueryable<T> GetAll<T>()
+            where T : class
         {
-            DatabaseEntities db = new DatabaseEntities();
-            this.db.Database.ExecuteSqlCommand(File.ReadAllText(@"..\..\..\Languages.Data\SQL\Table creation.sql")); // Because of some caching problem sometimes it doesn't work, if that's the case just modify anything in the source and rebuild the solution.
-            this.db.SaveChanges();
+            return db.Set<T>().AsQueryable<T>();
         }
 
         /// <inheritdoc/>
@@ -51,34 +51,6 @@ namespace Languages.Repository
         {
             this.db.Database.ExecuteSqlCommand("update " + table + " set " + field + " = '" + newValue + "' where " + table + "." + where + " = '" + value + "';");
             this.db.SaveChanges();
-        }
-
-        public void Insert<T>(T entity)
-        {
-            if (entity is language)
-            {
-                this.db.language.Add(entity as language);
-            }
-            else if (entity is country)
-            {
-                this.db.country.Add(entity as country);
-            }
-            else if (entity is language_family)
-            {
-                this.db.language_family.Add(entity as language_family);
-            }
-            else if (entity is langfam_lang_link)
-            {
-                this.db.langfam_lang_link.Add(entity as langfam_lang_link);
-            }
-            else if (entity is country_lang_link)
-            {
-                this.db.country_lang_link.Add(entity as country_lang_link);
-            }
-            else
-            {
-                throw new System.Exception();
-            }
         }
 
         /// <inheritdoc/>
@@ -119,7 +91,7 @@ namespace Languages.Repository
         /// <inheritdoc/>
         public IQueryable NamesOfCountries()
         {
-            return db.country.AsQueryable();
+            return this.db.country.AsQueryable();
         }
         /*
 

@@ -194,8 +194,10 @@
           <NavigationProperty Name="langfam_lang_link" Relationship="Self.FK__langfam_l__langf__29572725" FromRole="language_family" ToRole="langfam_lang_link" />
         </EntityType>
         <Association Name="FK__country_l__count__2D27B809">
-          <End Role="country" Type="Self.country" Multiplicity="1" />
-          <End Role="country_lang_link" Type="Self.country_lang_link" Multiplicity="*" />
+          <End Role="country" Type="Self.country" Multiplicity="1" >
+          </End>
+          <End Role="country_lang_link" Type="Self.country_lang_link" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="country">
               <PropertyRef Name="id" />
@@ -206,7 +208,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__country_l__lang___2E1BDC42">
-          <End Role="language" Type="Self.language" Multiplicity="1" />
+          <End Role="language" Type="Self.language" Multiplicity="1" >
+          </End>
           <End Role="country_lang_link" Type="Self.country_lang_link" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="language">
@@ -218,7 +221,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__langfam_l__lang___2A4B4B5E">
-          <End Role="language" Type="Self.language" Multiplicity="1" />
+          <End Role="language" Type="Self.language" Multiplicity="1" >
+          </End>
           <End Role="langfam_lang_link" Type="Self.langfam_lang_link" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="language">
@@ -230,7 +234,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__langfam_l__langf__29572725">
-          <End Role="language_family" Type="Self.language_family" Multiplicity="1" />
+          <End Role="language_family" Type="Self.language_family" Multiplicity="1" >
+          </End>
           <End Role="langfam_lang_link" Type="Self.langfam_lang_link" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="language_family">

@@ -11,14 +11,11 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class langfam_lang_link
     {
         public int id { get; set; }
-        [Required()]
         public int langfam_id { get; set; }
-        [Required()]
         public int lang_id { get; set; }
     
         public virtual language language { get; set; }

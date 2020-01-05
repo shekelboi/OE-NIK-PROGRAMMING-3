@@ -97,10 +97,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\CountryLangLinkRepository.cs" />
+    <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="EmptyInputException.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="IRepositories\IRepository.cs" />
+    <Compile Include="Repositories\LangfamLangLinkRepository.cs" />
+    <Compile Include="Repositories\LanguageFamilyRepository.cs" />
+    <Compile Include="Repositories\LanguageRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

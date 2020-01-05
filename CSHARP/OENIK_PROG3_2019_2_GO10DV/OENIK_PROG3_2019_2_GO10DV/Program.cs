@@ -8,20 +8,20 @@ namespace OENIK_PROG3_2019_2_GO10DV
     using System.Linq;
     using Languages.Data;
     using Languages.Logic;
+    using Languages.Logic.Logics;
 
     /// <summary>
     /// The main program.
     /// </summary>
     public class Program
     {
-        static Logic logic = new Logic();
         /// <summary>
         /// Main function.
         /// </summary>
         /// <param name="args">Passing arguments while opening the method from console.</param>
         private static void Main(string[] args)
         {
-            logic.InitDb(); // Can be ommitted if neccessary (if we wantt to change the database permanently).
+            Logic.InitDb();
             Menu();
         }
 
@@ -45,7 +45,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Console.WriteLine(ListAll(logic.GetAll()));
+                    Console.WriteLine(ListAll());
                     break;
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
@@ -65,6 +65,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
+                    Console.WriteLine("Generating random population for Russia.");
                     break;
                 case ConsoleKey.D7:
                 case ConsoleKey.NumPad7:
@@ -74,6 +75,8 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     Invalid();
                     break;
             }
+
+            Logic.DB.SaveChanges();
 
             Console.ReadKey(true);
             Menu();
@@ -100,19 +103,19 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        Console.WriteLine(DisplayLanguageFamilies());
+                        //Console.WriteLine(DisplayLanguageFamilies());
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        Console.WriteLine(DisplayOfficialLanguages());
+                        //Console.WriteLine(DisplayOfficialLanguages());
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        Console.WriteLine(DisplayLanguagesByDifficulty());
+                        //Console.WriteLine(DisplayLanguagesByDifficulty());
                         break;
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        Console.WriteLine(DisplayNumberOfSpeakers());
+                        //Console.WriteLine(DisplayNumberOfSpeakers());
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
@@ -165,10 +168,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                                 AddCountryPrompt();
                                 break;
                             case Operation.REMOVE:
-                                RemovePrompt("country");
+                                RemoveCountryPrompt();
                                 break;
                             case Operation.UPDATE:
-                                ModifyPrompt("country");
+                                ModifyCountryPrompt();
                                 break;
                             default:
                                 break;
@@ -183,10 +186,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                                 AddLanguagePrompt();
                                 break;
                             case Operation.REMOVE:
-                                RemovePrompt("language");
+                                RemoveLanguagePrompt();
                                 break;
                             case Operation.UPDATE:
-                                ModifyPrompt("language");
+                                ModifyLanguagePrompt();
                                 break;
                             default:
                                 break;
@@ -201,10 +204,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                                 AddLanguageFamilyPrompt();
                                 break;
                             case Operation.REMOVE:
-                                RemovePrompt("language_family");
+                                RemoveLanguageFamilyPrompt();
                                 break;
                             case Operation.UPDATE:
-                                ModifyPrompt("language_family");
+                                ModifyLanguageFamilyPrompt();
                                 break;
                             default:
                                 break;
@@ -219,10 +222,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                                 AddCountryLangLinkPrompt();
                                 break;
                             case Operation.REMOVE:
-                                RemovePrompt("country_lang_link");
+                                RemoveCountryLangLinkPrompt();
                                 break;
                             case Operation.UPDATE:
-                                ModifyPrompt("country_lang_link");
+                                ModifyCountryLangLinkPrompt();
                                 break;
                             default:
                                 break;
@@ -237,10 +240,10 @@ namespace OENIK_PROG3_2019_2_GO10DV
                                 AddLangfamLangLinkPrompt();
                                 break;
                             case Operation.REMOVE:
-                                RemovePrompt("langfam_lang_link");
+                                RemoveLangfamLangLinkPrompt();
                                 break;
                             case Operation.UPDATE:
-                                ModifyPrompt("langfam_lang_link");
+                                ModifyLangfamLangLinkPrompt();
                                 break;
                             default:
                                 break;
@@ -265,7 +268,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 Console.WriteLine(e.Message);
             }
         }
-
+        /*
         /// <summary>
         /// Displaying the languages and their language families.
         /// </summary>
@@ -345,21 +348,20 @@ namespace OENIK_PROG3_2019_2_GO10DV
             }
 
             return result;
-        }
+        }*/
 
         /// <summary>
         /// Listing all the entries.
         /// </summary>
-        /// <param name="db">The returned query.</param>
         /// <returns>Returns all the data in a string..</returns>
-        private static string ListAll(IQueryable db)
+        private static string ListAll()
         {
             string result = string.Empty;
             result += "========Countries========" + "\n";
 
             result += string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", "ID", "Name", "Population", "Capital", "Continent", "Area") + "\n\n";
 
-            foreach (var c in db.OfType<country>())
+            foreach (var c in new CountryLogic().GetAll())
             {
                 string s = string.Format("{0, 5} {1, 15} {2, 10} {3, 16} {4, 25} {5, 10}", c.id, c.name, c.population, c.capital, c.continent, c.area) + "\n";
                 result += s;
@@ -369,7 +371,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             result += string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", "ID", "Name", "ISO", "No. of speakers", "Rank by no. of speakers", "No. of languages", "Rank by no. of languages") + "\n\n";
 
-            foreach (var l in db.OfType<language_family>())
+            foreach (var l in new LanguageFamilyLogic().GetAll())
             {
                 string s = string.Format("{0, 5} {1, 30} {2, 10} {3, 20} {4, 25} {5, 20} {6, 25}", l.id, l.name, l.iso_code, l.number_of_speakers, l.rank_by_no_speakers, l.number_of_languages, l.rank_by_no_languages) + "\n";
                 result += s;
@@ -379,7 +381,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             result += string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", "ID", "Name", "Agglutinative", "No. of tenses", "No. noun decl. cases", "Difficulty", "No. of speakers", "Rank by no. of speakers") + "\n\n";
 
-            foreach (var l in db.OfType<language>())
+            foreach (var l in new LanguageLogic().GetAll())
             {
                 string s = string.Format("{0, 5} {1, 20} {2, 12} {3, 14} {4, 25} {5, 20} {6, 20} {7, 25}", l.id, l.name, l.agglutinative, l.number_of_tenses, l.no_of_noun_declension_cases, l.difficulty, l.number_of_speakers, l.rank_by_no_speakers) + "\n";
                 result += s;
@@ -389,7 +391,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             result += string.Format("{0, 5} {1, 15} {2, 15}", "ID", "country_id", "language_id") + "\n\n";
 
-            foreach (var cl in db.OfType<country_lang_link>())
+            foreach (var cl in new CountryLangLinkLogic().GetAll())
             {
                 string s = string.Format("{0, 5} {1, 15} {2, 15}", cl.id, cl.country_id, cl.lang_id) + "\n";
                 result += s;
@@ -399,7 +401,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             result += string.Format("{0, 5} {1, 15} {2, 20}", "ID", "language_id", "language_family_id") + "\n\n";
 
-            foreach (var ll in db.OfType<langfam_lang_link>())
+            foreach (var ll in new LangfamLangLinkLogic().GetAll())
             {
                 string s = string.Format("{0, 5} {1, 15} {2, 15}", ll.id, ll.lang_id, ll.lang_id) + "\n";
                 result += s;
@@ -456,7 +458,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            logic.AddLangfamLangLink(lll);
+            new LangfamLangLinkLogic().Insert(lll);
         }
 
         /// <summary>
@@ -507,7 +509,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            logic.AddCountryLangLink(cll);
+            new CountryLangLinkLogic().Insert(cll);
         }
 
         /// <summary>
@@ -624,7 +626,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            logic.AddLanguageFamily(lf);
+            new LanguageFamilyLogic().Insert(lf);
         }
 
         /// <summary>
@@ -754,7 +756,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            logic.AddLanguage(l);
+            new LanguageLogic().Insert(l);
         }
 
         /// <summary>
@@ -844,37 +846,117 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 throw new EmptyInputException();
             }
 
-            logic.AddCountry(c);
+            new CountryLogic().Insert(c);
         }
 
         /// <summary>
-        /// Prompting for table to remove from.
+        /// Removing a country entry.
         /// </summary>
-        /// <param name="table">Table to remove from.</param>
-        private static void RemovePrompt(string table)
+        private static void RemoveCountryPrompt()
         {
-            Console.Write("WHERE: ");
-            string where = Console.ReadLine();
-            Console.Write("EQUAL TO: ");
-            string value = Console.ReadLine();
-            logic.Remove(table, where, value);
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Remove(id);
         }
 
         /// <summary>
-        /// Prompting for table entry modification.
+        /// Removing a country_lang_link entry.
         /// </summary>
-        /// <param name="table">Table in which we intend to modify an entry.</param>
-        private static void ModifyPrompt(string table)
+        private static void RemoveCountryLangLinkPrompt()
         {
-            Console.Write("WHERE: ");
-            string where = Console.ReadLine();
-            Console.Write("EQUAL TO: ");
-            string value = Console.ReadLine();
-            Console.Write("FIELD TO UPDATE: ");
-            string field = Console.ReadLine();
-            Console.Write("NEW VALUE: ");
-            string newValue = Console.ReadLine();
-            logic.Modify(table, where, value, field, newValue);
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            new CountryLangLinkLogic().Remove(id);
+        }
+
+        /// <summary>
+        /// Removing a language entry.
+        /// </summary>
+        private static void RemoveLanguagePrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            new LanguageLogic().Remove(id);
+        }
+
+        /// <summary>
+        /// Removing a language_family entry.
+        /// </summary>
+        private static void RemoveLanguageFamilyPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            new LanguageFamilyLogic().Remove(id);
+        }
+
+        /// <summary>
+        /// Removing a langfam_lang_link entry.
+        /// </summary>
+        private static void RemoveLangfamLangLinkPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            new LangfamLangLinkLogic().Remove(id);
+        }
+
+        /// <summary>
+        /// Modifying the country's population.
+        /// </summary>
+        private static void ModifyCountryPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Population: ");
+            int population = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Modify(id, population);
+        }
+
+        /// <summary>
+        /// Modifying the country lang link's langid.
+        /// </summary>
+        private static void ModifyCountryLangLinkPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Language id: ");
+            int langid  = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Modify(id, langid);
+        }
+
+        /// <summary>
+        /// Modifying the language's number of speakers.
+        /// </summary>
+        private static void ModifyLanguagePrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Number of speakers: ");
+            int no_speakers = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Modify(id, no_speakers);
+        }
+
+        /// <summary>
+        /// Modifying the langfam_lang_link's langid.
+        /// </summary>
+        private static void ModifyLangfamLangLinkPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Number of speakers: ");
+            int langid = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Modify(id, langid);
+        }
+
+        /// <summary>
+        /// Modifying the language family's number of speakers.
+        /// </summary>
+        private static void ModifyLanguageFamilyPrompt()
+        {
+            Console.Write("ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Number of speakers: ");
+            int no_speakers = Convert.ToInt32(Console.ReadLine());
+            new CountryLogic().Modify(id, no_speakers);
         }
 
         /// <summary>

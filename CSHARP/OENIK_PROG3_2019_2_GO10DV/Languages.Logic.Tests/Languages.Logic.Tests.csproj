@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -107,6 +108,20 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.4\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Languages.Data\Languages.Data.csproj">
+      <Project>{4796399f-e55e-4143-a5a3-392a77456f1a}</Project>
+      <Name>Languages.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages.Logic\Languages.Logic.csproj">
+      <Project>{19cdba3c-8c34-4ff3-9ba5-33c3d0154ce3}</Project>
+      <Name>Languages.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Languages.Repository\Languages.Repository.csproj">
+      <Project>{7c7d4baa-7bfe-4864-9f5a-ff64516d0106}</Project>
+      <Name>Languages.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
