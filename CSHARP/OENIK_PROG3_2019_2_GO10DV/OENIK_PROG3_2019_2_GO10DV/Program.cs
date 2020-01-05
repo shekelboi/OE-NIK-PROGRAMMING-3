@@ -103,19 +103,19 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        //Console.WriteLine(DisplayLanguageFamilies());
+                        Console.WriteLine(DisplayLanguageFamilies());
                         break;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        //Console.WriteLine(DisplayOfficialLanguages());
+                        Console.WriteLine(DisplayOfficialLanguages());
                         break;
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        //Console.WriteLine(DisplayLanguagesByDifficulty());
+                        Console.WriteLine(DisplayLanguagesByDifficulty());
                         break;
                     case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        //Console.WriteLine(DisplayNumberOfSpeakers());
+                        Console.WriteLine(DisplayNumberOfSpeakers());
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
@@ -268,20 +268,18 @@ namespace OENIK_PROG3_2019_2_GO10DV
                 Console.WriteLine(e.Message);
             }
         }
-        /*
+
         /// <summary>
         /// Displaying the languages and their language families.
         /// </summary>
         /// <returns>Results in a string.</returns>
         private static string DisplayLanguageFamilies()
         {
-            var q = logic.LanguageFamilies();
-
             string header = string.Format("{0,20} {1,30}", "Language", "Language family");
 
             string result = header + "\n";
 
-            foreach (var item in q)
+            foreach (var item in new LanguageLogic().LanguageFamilies())
             {
                 string s = string.Format("{0,20} {1,30}", item.Language_name, item.Langfam_name) + "\n";
                 result += s;
@@ -296,13 +294,11 @@ namespace OENIK_PROG3_2019_2_GO10DV
         /// <returns>The results in a string.</returns>
         private static string DisplayLanguagesByDifficulty()
         {
-            var q = logic.LanguagesByDifficulty();
-
             string header = string.Format("{0,6} {1, 6}", "Difficulty", "No. of speakers");
 
             string result = header + "\n";
 
-            foreach (var item in q)
+            foreach (var item in new LanguageLogic().LanguagesByDifficulty())
             {
                 string s = string.Format("{0,6} {1, 6}", item.Difficulty, item.Sum) + "\n";
                 result += s;
@@ -321,7 +317,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
 
             string result = header + "\n";
 
-            foreach (var item in logic.OfficialLanguages())
+            foreach (var item in new LanguageLogic().OfficialLanguages())
             {
                 string s = item.Country + " has " + item.Language + " as their official language." + "\n";
                 result += s;
@@ -336,19 +332,18 @@ namespace OENIK_PROG3_2019_2_GO10DV
         /// <returns>Returns the result in a string.</returns>
         private static string DisplayNumberOfSpeakers()
         {
-            var q = logic.NumberOfSpeakers();
             string header = string.Format("{0,10} {1, 20}", "Difficulty", "Speakers");
 
             string result = header + "\n";
 
-            foreach (var item in q)
+            foreach (var item in new LanguageLogic().NumberOfSpeakers())
             {
                 string s = string.Format("{0,10} {1, 20}", item.Difficulty, item.NumberOfSpeakers) + "\n";
                 result += s;
             }
 
             return result;
-        }*/
+        }
 
         /// <summary>
         /// Listing all the entries.

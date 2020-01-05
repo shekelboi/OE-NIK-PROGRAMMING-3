@@ -13,6 +13,10 @@ namespace Languages.Logic
     public interface ILogic<T>
         where T : class
     {
+        /// <summary>
+        /// Getting all the entries.
+        /// </summary>
+        /// <returns>All the instances.</returns>
         IEnumerable<T> GetAll();
 
         /// <summary>
@@ -33,5 +37,12 @@ namespace Languages.Logic
         /// </summary>
         /// <param name="entry">New entry.</param>
         void Insert(T entry);
+
+        /// <summary>
+        /// Getting one of the instances based on its id.
+        /// </summary>
+        /// <param name="id">ID of the instance.</param>
+        /// <returns>Specific instance.</returns>
+        T GetOne(int id);
     }
 }

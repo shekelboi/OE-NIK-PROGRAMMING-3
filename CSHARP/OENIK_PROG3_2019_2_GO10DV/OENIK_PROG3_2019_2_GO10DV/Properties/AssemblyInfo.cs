@@ -9,11 +9,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OENIK_PROG3_2019_1_GO10DV")]
+[assembly: AssemblyTitle("OENIK_PROG3_2019_2_GO10DV")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OENIK_PROG3_2019_1_GO10DV")]
+[assembly: AssemblyProduct("OENIK_PROG3_2019_2_GO10DV")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

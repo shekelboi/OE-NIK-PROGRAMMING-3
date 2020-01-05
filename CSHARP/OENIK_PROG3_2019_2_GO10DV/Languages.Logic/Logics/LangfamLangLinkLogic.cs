@@ -10,12 +10,35 @@
     /// </summary>
     public class LangfamLangLinkLogic : ILogic<langfam_lang_link>
     {
-        private IRepository<langfam_lang_link> repository = new LangfamLangLinkRepository(Logic.DB);
+        private IRepository<langfam_lang_link> repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LangfamLangLinkLogic"/> class.
+        /// </summary>
+        public LangfamLangLinkLogic()
+        {
+            this.repository = new LangfamLangLinkRepository(Logic.DB);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LangfamLangLinkLogic"/> class.
+        /// </summary>
+        /// <param name="ir">Custom repository.</param>
+        public LangfamLangLinkLogic(IRepository<langfam_lang_link> ir)
+        {
+            this.repository = ir;
+        }
 
         /// <inheritdoc/>
         public IEnumerable<langfam_lang_link> GetAll()
         {
             return this.repository.GetAll().ToList();
+        }
+
+        /// <inheritdoc/>
+        public langfam_lang_link GetOne(int id)
+        {
+            return this.repository.GetOne(id);
         }
 
         /// <inheritdoc/>

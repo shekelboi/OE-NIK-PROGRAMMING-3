@@ -10,12 +10,35 @@
     /// </summary>
     public class LanguageFamilyLogic : ILogic<language_family>
     {
-        private IRepository<language_family> repository = new LanguageFamilyRepository(Logic.DB);
+        private IRepository<language_family> repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LanguageFamilyLogic"/> class.
+        /// </summary>
+        public LanguageFamilyLogic()
+        {
+            this.repository = new LanguageFamilyRepository(Logic.DB);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LanguageFamilyLogic"/> class.
+        /// </summary>
+        /// <param name="ir">Custom repository.</param>
+        public LanguageFamilyLogic(IRepository<language_family> ir)
+        {
+            this.repository = ir;
+        }
 
         /// <inheritdoc/>
         public IEnumerable<language_family> GetAll()
         {
             return this.repository.GetAll().ToList();
+        }
+
+        /// <inheritdoc/>
+        public language_family GetOne(int id)
+        {
+            return this.repository.GetOne(id);
         }
 
         /// <inheritdoc/>

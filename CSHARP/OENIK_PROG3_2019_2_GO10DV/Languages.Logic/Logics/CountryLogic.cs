@@ -10,12 +10,35 @@
     /// </summary>
     public class CountryLogic : ILogic<country>
     {
-        private IRepository<country> repository = new CountryRepository(Logic.DB);
+        private IRepository<country> repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CountryLogic"/> class.
+        /// </summary>
+        public CountryLogic()
+        {
+            this.repository = new CountryRepository(Logic.DB);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CountryLogic"/> class.
+        /// </summary>
+        /// <param name="ir">Custom repository.</param>
+        public CountryLogic(IRepository<country> ir)
+        {
+            this.repository = ir;
+        }
 
         /// <inheritdoc/>
         public IEnumerable<country> GetAll()
         {
             return this.repository.GetAll().ToList();
+        }
+
+        /// <inheritdoc/>
+        public country GetOne(int id)
+        {
+            return this.repository.GetOne(id);
         }
 
         /// <inheritdoc/>

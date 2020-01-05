@@ -6,6 +6,7 @@
     using System.Linq;
     using Languages.Data;
     using Languages.Repository;
+    using Logics;
 
     /// <summary>
     /// Accessible query methods for the user.
@@ -23,6 +24,11 @@
         {
             db.Database.ExecuteSqlCommand(File.ReadAllText(@"..\..\..\Languages.Data\SQL\Table creation.sql")); // Because of some caching problem sometimes it doesn't work, if that's the case just modify anything in the source and rebuild the solution.
             db.SaveChanges();
+        }
+
+        public static void SetCustomDb(DatabaseEntities db)
+        {
+            Logic.db = db;
         }
     }
 }
