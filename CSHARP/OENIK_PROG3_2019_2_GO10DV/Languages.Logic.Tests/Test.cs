@@ -54,23 +54,22 @@
         [Test]
         public void RemoveCountry()
         {
-            Mock<IRepository<country>> mock = new Mock<IRepository<country>>();
+            Mock<IRepository<language>> mock = new Mock<IRepository<language>>(MockBehavior.Loose);
 
-            mock.Setup(m => m.GetAll()).Returns(new List<country>()
+            IQueryable<language> l = new List<language>()
             {
-                new country { name = "test1" },
-                new country { name = "test2" },
-                new country { name = "test3" },
-                new country { name = "test4" },
-                new country { name = "test5" },
-            }.AsQueryable());
+                new language { id = 1, name = "test1" },
+                new language { id = 2, name = "test2" },
+                new language { id = 3, name = "test3" },
+                new language { id = 4, name = "test4" },
+                new language { id = 5, name = "test5" },
+            }.AsQueryable();
+            mock.Setup(x => x.GetAll()).Returns(l);
 
-            ILogic<country> il = new CountryLogic(mock.Object);
-
-            il.Insert(new country { name = "test6" });
-            Logic.DB.SaveChanges();
-
-            Assert.That(il.GetOne(6).name == "test6");
+            ILogic<language> il = new LanguageLogic(mock.Object);
+            mock.Object.Remove(1);
+            Console.WriteLine(il.GetAll().First().name);
+            Assert.That(il.GetAll().First().name == "test2");
         }
 
         /// <summary>
