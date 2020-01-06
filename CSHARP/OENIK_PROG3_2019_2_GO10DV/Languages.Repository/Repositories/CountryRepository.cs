@@ -1,4 +1,8 @@
-﻿namespace Languages.Repository
+﻿// <copyright file="CountryRepository.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Repository
 {
     using System.Linq;
     using Languages.Data;

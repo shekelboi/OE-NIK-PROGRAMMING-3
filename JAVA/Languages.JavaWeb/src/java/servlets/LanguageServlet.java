@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Random;
 
 /**
  *
@@ -33,8 +34,15 @@ public class LanguageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            Random r = new Random();
+            String parameter = request.getParameter("population");
+            if (parameter != null)
+            {
+                int population = r.nextInt(1299999000) + 1000;
+                out.write(String.valueOf(population));
+            }
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
+            /*out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet LanguageServlet</title>");            
@@ -42,7 +50,7 @@ public class LanguageServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet LanguageServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");*/
         }
     }
 

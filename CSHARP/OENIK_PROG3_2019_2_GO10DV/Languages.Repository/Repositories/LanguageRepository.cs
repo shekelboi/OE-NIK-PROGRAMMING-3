@@ -1,4 +1,8 @@
-﻿namespace Languages.Repository
+﻿// <copyright file="LanguageRepository.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Repository
 {
     using System.Linq;
     using Languages.Data;
@@ -8,7 +12,7 @@
     /// </summary>
     public class LanguageRepository : IRepository<language>
     {
-        private DatabaseEntities db;
+        private readonly DatabaseEntities db;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LanguageRepository"/> class.

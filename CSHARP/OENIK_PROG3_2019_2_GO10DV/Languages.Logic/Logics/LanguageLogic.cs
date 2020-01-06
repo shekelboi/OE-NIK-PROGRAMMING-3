@@ -1,4 +1,8 @@
-﻿namespace Languages.Logic.Logics
+﻿// <copyright file="LanguageLogic.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Logic.Logics
 {
     using System;
     using System.Collections.Generic;

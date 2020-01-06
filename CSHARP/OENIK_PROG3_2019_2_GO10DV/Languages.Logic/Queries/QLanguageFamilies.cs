@@ -33,6 +33,5 @@ namespace Languages.Logic
         /// Gets language family name.
         /// </summary>
         public string Langfam_name { get => this.langfamName; }
-
     }
 }

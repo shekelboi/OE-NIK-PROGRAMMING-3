@@ -5,7 +5,7 @@
 namespace OENIK_PROG3_2019_2_GO10DV
 {
     using System;
-    using System.Linq;
+    using System.Net;
     using Languages.Data;
     using Languages.Logic;
     using Languages.Logic.Logics;
@@ -65,7 +65,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:
-                    Console.WriteLine("Generating random population for Russia.");
+                    JAVA();
                     break;
                 case ConsoleKey.D7:
                 case ConsoleKey.NumPad7:
@@ -914,7 +914,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             Console.Write("ID: ");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Language id: ");
-            int langid  = Convert.ToInt32(Console.ReadLine());
+            int langid = Convert.ToInt32(Console.ReadLine());
             new CountryLogic().Modify(id, langid);
         }
 
@@ -952,6 +952,21 @@ namespace OENIK_PROG3_2019_2_GO10DV
             Console.Write("Number of speakers: ");
             int no_speakers = Convert.ToInt32(Console.ReadLine());
             new CountryLogic().Modify(id, no_speakers);
+        }
+
+        /// <summary>
+        /// Java part of the project.
+        /// </summary>
+        private static void JAVA()
+        {
+            WebClient wbc = new WebClient();
+            string baseURL = "http://localhost:8080/Languages.JavaWeb/LanguageServlet";
+            string input = wbc.DownloadString(baseURL + "?" + "population");
+            Console.WriteLine("Generating random population for Russia.");
+            int population = Convert.ToInt32(input);
+            Console.WriteLine();
+            new CountryLogic().Modify(1, population);
+            Console.WriteLine("Random population added.");
         }
 
         /// <summary>

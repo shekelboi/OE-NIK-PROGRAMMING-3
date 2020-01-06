@@ -1,4 +1,8 @@
-﻿namespace Languages.Logic.Logics
+﻿// <copyright file="LanguageFamilyLogic.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Logic.Logics
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +14,7 @@
     /// </summary>
     public class LanguageFamilyLogic : ILogic<language_family>
     {
-        private IRepository<language_family> repository;
+        private readonly IRepository<language_family> repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LanguageFamilyLogic"/> class.

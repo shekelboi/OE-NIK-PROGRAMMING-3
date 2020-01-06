@@ -1,4 +1,8 @@
-﻿namespace Languages.Logic.Logics
+﻿// <copyright file="LangfamLangLinkLogic.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Logic.Logics
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +14,7 @@
     /// </summary>
     public class LangfamLangLinkLogic : ILogic<langfam_lang_link>
     {
-        private IRepository<langfam_lang_link> repository;
+        private readonly IRepository<langfam_lang_link> repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LangfamLangLinkLogic"/> class.
