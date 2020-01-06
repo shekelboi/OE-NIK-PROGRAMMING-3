@@ -646,7 +646,7 @@ namespace OENIK_PROG3_2019_2_GO10DV
             }
 
             // Agglutinative
-            Console.Write("Agglutinative (Y/N): ");
+            Console.Write("Agglutinative (T/F): ");
             input = Console.ReadLine();
 
             if (input != string.Empty)

@@ -1,4 +1,4 @@
-﻿// <copyright file="IsYorN.cs" company="Barta Zoltán Kevin">
+﻿// <copyright file="IsTorF.cs" company="Barta Zoltán Kevin">
 // Copyright (c) Barta Zoltán Kevin. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace Languages.Data
     /// <summary>
     /// Checking whether a value is valid.
     /// </summary>
-    public class IsYorN : ValidationAttribute
+    public class IsTorF : ValidationAttribute
     {
         /// <summary>
         /// Displayed error message.
@@ -18,17 +18,17 @@ namespace Languages.Data
         /// <returns>Returns an error message.</returns>
         public override string FormatErrorMessage(string name)
         {
-            return $"{name}'s value wasn't Y or N.";
+            return $"{name}'s value wasn't T or F.";
         }
 
         /// <summary>
-        /// Checks if the value either Y or N.
+        /// Checks if the value either T or F.
         /// </summary>
         /// <param name="value">Value of the field.</param>
         /// <returns>Returns whether the value is valid.</returns>
         public override bool IsValid(object value)
         {
-            return (string)value == "Y" || (string)value == "N";
+            return (string)value == "T" || (string)value == "F";
         }
     }
 }

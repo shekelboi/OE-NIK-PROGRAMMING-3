@@ -23,18 +23,11 @@ namespace Languages.Logic.Tests
     public class Test
     {
         /// <summary>
-        /// Testing get all.
+        /// Testing the LanguagesByDifficulty() query.
         /// </summary>
         [Test]
         public void TestLanguagesByDifficulty()
         {
-            Mock<ILanguageLogic> mock = new Mock<ILanguageLogic>();
-            List<QLanguagesByDifficulty> l = new List<QLanguagesByDifficulty>()
-            {
-                new QLanguagesByDifficulty("Easy", 1),
-                new QLanguagesByDifficulty("Hard", 4),
-            };
-
             Mock<IRepository<language>> mLang = new Mock<IRepository<language>>();
 
             List<language> langList = new List<language>()
@@ -44,6 +37,7 @@ namespace Languages.Logic.Tests
                 new language() { difficulty = "Hard" },
                 new language() { difficulty = "Hard" },
                 new language() { difficulty = "Easy" },
+                new language() { difficulty = "Easy" },
             };
 
             mLang.Setup(m => m.GetAll()).Returns(langList.AsQueryable());
@@ -51,36 +45,88 @@ namespace Languages.Logic.Tests
             ILogic<language> il = new LanguageLogic(mLang.Object);
             ILanguageLogic il2 = new LanguageLogic(mLang.Object);
 
+            // Assert
             Assert.That(il.GetAll().Where(x => x.difficulty == "Hard").Count() == 4);
             Assert.That(il2.LanguagesByDifficulty().Where(x => x.Difficulty == "Hard").First().Sum == 4);
+            Assert.That(il2.LanguagesByDifficulty().Where(x => x.Difficulty == "Easy").First().Sum == 2);
         }
 
         /// <summary>
-        /// Testing adding a country.
+        /// Testing the LanguageFamilies() query.
         /// </summary>
         [Test]
-        public void RemoveCountry()
+        public void TestLanguageFamilies()
         {
-            Mock<IRepository<language>> mock = new Mock<IRepository<language>>(MockBehavior.Loose);
+            Mock<IRepository<language>> mLang = new Mock<IRepository<language>>();
+            Mock<IRepository<language_family>> mLangFam = new Mock<IRepository<language_family>>();
+            Mock<IRepository<langfam_lang_link>> mLink = new Mock<IRepository<langfam_lang_link>>();
 
-            IQueryable<language> l = new List<language>()
+            List<language> langList = new List<language>()
             {
-                new language { id = 1, name = "test1" },
-                new language { id = 2, name = "test2" },
-                new language { id = 3, name = "test3" },
-                new language { id = 4, name = "test4" },
-                new language { id = 5, name = "test5" },
-            }.AsQueryable();
-            mock.Setup(x => x.GetAll()).Returns(l);
+                new language() { id = 1, name = "lang1" },
+                new language() { id = 2, name = "lang2" },
+                new language() { id = 3, name = "lang3" },
+                new language() { id = 4, name = "lang4" },
+                new language() { id = 5, name = "lang5" },
+                new language() { id = 6, name = "lang6" },
+            };
 
-            ILogic<language> il = new LanguageLogic(mock.Object);
-            mock.Object.Remove(1);
-            Console.WriteLine(il.GetAll().First().name);
-            Assert.That(il.GetAll().First().name == "test2");
+            List<language_family> langfamList = new List<language_family>()
+            {
+                new language_family() { id = 1, name = "fam1" },
+                new language_family() { id = 2, name = "fam2" },
+                new language_family() { id = 3, name = "fam3" },
+            };
+
+            List<langfam_lang_link> linkList = new List<langfam_lang_link>()
+            {
+                new langfam_lang_link { id = 1, lang_id = 1, langfam_id = 1 },
+                new langfam_lang_link { id = 2, lang_id = 2, langfam_id = 2 },
+                new langfam_lang_link { id = 3, lang_id = 3, langfam_id = 2 },
+                new langfam_lang_link { id = 4, lang_id = 4, langfam_id = 2 },
+                new langfam_lang_link { id = 5, lang_id = 5, langfam_id = 3 },
+                new langfam_lang_link { id = 6, lang_id = 6, langfam_id = 3 },
+            };
+
+            mLang.Setup(m => m.GetAll()).Returns(langList.AsQueryable());
+            mLangFam.Setup(m => m.GetAll()).Returns(langfamList.AsQueryable());
+            mLink.Setup(m => m.GetAll()).Returns(linkList.AsQueryable());
+
+            ILanguageLogic il1 = new LanguageLogic(mLang.Object);
+            ILogic<language_family> il2 = new LanguageFamilyLogic(mLangFam.Object);
+            ILogic<langfam_lang_link> il3 = new LangfamLangLinkLogic(mLink.Object);
+
+            Console.WriteLine(il1.LanguageFamilies().First().Language_name);
+            // Assert
+            //Assert.That(il4.LanguageFamilies().First().Language_name == "lang1");
         }
 
         /// <summary>
-        /// Testing removing a language.
+        /// Testing the Modify() query on a country's population.
+        /// </summary>
+        /// <param name="value">Values to test.</param>
+        [Test]
+        [Sequential]
+        public void ModifyCountryTest([Values(100)] int value)
+        {
+            Mock<IRepository<country>> mock = new Mock<IRepository<country>>(MockBehavior.Loose);
+
+            mock.Setup(m => m.GetAll()).Returns(new List<country>()
+            {
+                new country { id = 1, population = 2343231 },
+                new country { id = 2, population = 89495665 },
+                new country { id = 3, population = 56195615 },
+                new country { id = 4, population = 9619819 },
+                new country { id = 5, population = 56115656 },
+            }.AsQueryable());
+
+            ILogic<country> il = new CountryLogic(mock.Object);
+            il.Modify(1, value);
+            mock.Verify(m => m.Modify(1, value));
+        }
+
+        /// <summary>
+        /// Testing the Remove() query on a language.
         /// </summary>
         [Test]
         public void RemoveLanguageTest()
@@ -98,14 +144,61 @@ namespace Languages.Logic.Tests
 
             ILogic<language> il = new LanguageLogic(mock.Object);
 
-            Console.WriteLine(il.GetAll().First().id);
-            Assert.That(il.GetOne(5) != null);
+            il.Remove(1);
+            mock.Verify(m => m.Remove(1));
+        }
 
-            il.Remove(il.GetAll().Last().id);
-            Logic.DB.SaveChanges();
+        /// <summary>
+        /// Testing the Insert() query on a language family.
+        /// </summary>
+        [Test]
+        public void AddLanguageFamilyTest()
+        {
+            language_family lf = new language_family()
+            {
+                id = 4,
+                name = "prog3",
+            };
 
-            Console.WriteLine(il.GetAll().First().id);
-            Assert.That(il.GetOne(5) is null);
+            Mock<IRepository<language_family>> mock = new Mock<IRepository<language_family>>();
+
+            mock.Setup(m => m.GetAll()).Returns(new List<language_family>()
+            {
+                new language_family { id = 1, name = "test1" },
+                new language_family { id = 2, name = "test2" },
+                new language_family { id = 3, name = "test3" },
+            }.AsQueryable());
+
+            ILogic<language_family> il = new LanguageFamilyLogic(mock.Object);
+
+            il.Insert(lf);
+            mock.Verify(m => m.Insert(lf));
+        }
+
+        /// <summary>
+        /// Testing all the data (GetAll() and GetOne()).
+        /// </summary>
+        [Test]
+        public void ListAllDataTest()
+        {
+            Mock<IRepository<country>> mock = new Mock<IRepository<country>>();
+            country c = new country
+            {
+                id = 1,
+                population = 100,
+            };
+            mock.Setup(m => m.GetAll()).Returns(new List<country>()
+            {
+                new country { id = 1, population = 100 },
+                new country { id = 2, population = 200 },
+                new country { id = 3, population = 300 },
+            }.AsQueryable());
+
+            ILogic<country> il = new CountryLogic(mock.Object);
+
+            Assert.That(il.GetAll().Sum(x => x.population) == 600);
+            country temp = il.GetOne(1);
+            mock.Verify(m => m.GetOne(1));
         }
     }
 }

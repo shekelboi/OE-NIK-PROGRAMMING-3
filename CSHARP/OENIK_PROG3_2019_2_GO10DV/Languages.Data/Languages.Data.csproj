@@ -89,7 +89,7 @@
     <Compile Include="country_lang_link.cs">
       <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="IsYorN.cs" />
+    <Compile Include="IsTorF.cs" />
     <Compile Include="langfam_lang_link.cs">
       <DependentUpon>ADO_DB.tt</DependentUpon>
     </Compile>
