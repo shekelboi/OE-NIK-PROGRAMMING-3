@@ -1,19 +1,26 @@
-﻿namespace Languages.Logic.Tests
+﻿// <copyright file="Test.cs" company="Barta Zoltán Kevin">
+// Copyright (c) Barta Zoltán Kevin. All rights reserved.
+// </copyright>
+
+namespace Languages.Logic.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Moq;
-    using NUnit.Framework;
     using Languages.Data;
     using Languages.Logic;
     using Languages.Logic.Logics;
     using Languages.Repository;
+    using Moq;
+    using NUnit.Framework;
 
+    /// <summary>
+    /// Test class.
+    /// </summary>
     [TestFixture]
-    class Test
+    public class Test
     {
         /// <summary>
         /// Testing get all.
