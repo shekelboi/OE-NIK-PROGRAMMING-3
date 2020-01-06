@@ -97,8 +97,9 @@ namespace Languages.Logic.Tests
             ILogic<langfam_lang_link> il3 = new LangfamLangLinkLogic(mLink.Object);
 
             Console.WriteLine(il1.LanguageFamilies().First().Language_name);
+
             // Assert
-            //Assert.That(il4.LanguageFamilies().First().Language_name == "lang1");
+            // Assert.That(il4.LanguageFamilies().First().Language_name == "lang1");
         }
 
         /// <summary>
