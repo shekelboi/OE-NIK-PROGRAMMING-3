@@ -12,8 +12,14 @@ namespace Languages.Data
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// Language table.
+    /// </summary>
     public partial class language
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="language"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public language()
         {
@@ -21,17 +27,47 @@ namespace Languages.Data
             this.langfam_lang_link = new HashSet<langfam_lang_link>();
         }
     
+        /// <summary>
+        /// Id of a language.
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Name of a language.
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// Whether a language is agglutinative.
+        /// </summary>
         public string agglutinative { get; set; }
+        /// <summary>
+        /// Number of tenses in a language.
+        /// </summary>
         public int number_of_tenses { get; set; }
+        /// <summary>
+        /// Number of noun declension cases in a language.
+        /// </summary>
         public int no_of_noun_declension_cases { get; set; }
+        /// <summary>
+        /// Difficulty of a language.
+        /// </summary>
         public string difficulty { get; set; }
+        /// <summary>
+        /// Number of speakers of a language.
+        /// </summary>
         public int number_of_speakers { get; set; }
+        /// <summary>
+        /// Rank by number of speakers of a language.
+        /// </summary>
         public int rank_by_no_speakers { get; set; }
     
+        /// <summary>
+        /// Country - language link table.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<country_lang_link> country_lang_link { get; set; }
+        /// <summary>
+        /// Language family - language link table.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<langfam_lang_link> langfam_lang_link { get; set; }
     }

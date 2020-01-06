@@ -12,21 +12,47 @@ namespace Languages.Data
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// Country class.
+    /// </summary>
     public partial class country
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="country"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public country()
         {
             this.country_lang_link = new HashSet<country_lang_link>();
         }
     
+        /// <summary>
+        /// Id of a country.
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Name of a country.
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// Population of a country.
+        /// </summary>
         public int population { get; set; }
+        /// <summary>
+        /// Capital of a coutnry.
+        /// </summary>
         public string capital { get; set; }
+        /// <summary>
+        /// Continent of a country.
+        /// </summary>
         public string continent { get; set; }
+        /// <summary>
+        /// Area of a country.
+        /// </summary>
         public int area { get; set; }
-    
+        /// <summary>
+        /// Country language link table.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<country_lang_link> country_lang_link { get; set; }
     }

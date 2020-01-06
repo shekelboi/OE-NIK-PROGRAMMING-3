@@ -12,22 +12,52 @@ namespace Languages.Data
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// Language family table.
+    /// </summary>
     public partial class language_family
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="language_family"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public language_family()
         {
             this.langfam_lang_link = new HashSet<langfam_lang_link>();
         }
     
+        /// <summary>
+        /// Id of a language family.
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Name of a language family.
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// ISO code of a language family.
+        /// </summary>
         public string iso_code { get; set; }
+        /// <summary>
+        /// Number of speakers of a language family.
+        /// </summary>
         public long number_of_speakers { get; set; }
+        /// <summary>
+        /// Rank by number of speakers of a language family.
+        /// </summary>
         public int rank_by_no_speakers { get; set; }
+        /// <summary>
+        /// Number of languages in a language family.
+        /// </summary>
         public int number_of_languages { get; set; }
+        /// <summary>
+        /// Rank by number of languages in a language family.
+        /// </summary>
         public int rank_by_no_languages { get; set; }
     
+        /// <summary>
+        /// Langfam_lang_link table.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<langfam_lang_link> langfam_lang_link { get; set; }
     }

@@ -12,13 +12,31 @@ namespace Languages.Data
     using System;
     using System.Collections.Generic;
     
+    /// <summary>
+    /// Country - language link.
+    /// </summary>
     public partial class country_lang_link
     {
+        /// <summary>
+        /// Id of country_lang_link.
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Country id of country_lang_link.
+        /// </summary>
         public int country_id { get; set; }
+        /// <summary>
+        /// Language id of country_lang_link.
+        /// </summary>
         public int lang_id { get; set; }
     
+        /// <summary>
+        /// Country table.
+        /// </summary>
         public virtual country country { get; set; }
+        /// <summary>
+        /// Language table.
+        /// </summary>
         public virtual language language { get; set; }
     }
 }

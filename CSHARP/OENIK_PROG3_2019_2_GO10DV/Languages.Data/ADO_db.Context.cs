@@ -13,22 +13,47 @@ namespace Languages.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
+    /// <summary>
+    /// Database entities.
+    /// </summary>
     public partial class DatabaseEntities : DbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseEntities"/> class.
+        /// </summary>
         public DatabaseEntities()
             : base("name=DatabaseEntities")
         {
         }
     
+        /// <summary>
+        /// Some automatically generated method.
+        /// </summary>
+        /// <param name="modelBuilder">Database model builder.</param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
+        /// <summary>
+        /// Country table.
+        /// </summary>
         public virtual DbSet<country> country { get; set; }
+        /// <summary>
+        /// Country - language link table.
+        /// </summary>
         public virtual DbSet<country_lang_link> country_lang_link { get; set; }
+        /// <summary>
+        /// Language family - language link table.
+        /// </summary>
         public virtual DbSet<langfam_lang_link> langfam_lang_link { get; set; }
+        /// <summary>
+        /// Language table.
+        /// </summary>
         public virtual DbSet<language> language { get; set; }
+        /// <summary>
+        /// Language family table.
+        /// </summary>
         public virtual DbSet<language_family> language_family { get; set; }
     }
 }

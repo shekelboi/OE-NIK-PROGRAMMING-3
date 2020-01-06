@@ -11,14 +11,31 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
-    
+
+    /// <summary>
+    /// Language family - language link.
+    /// </summary>
     public partial class langfam_lang_link
     {
+        /// <summary>
+        /// Id of a langfam_lang_link.
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Language family id of a langfam_lang_link.
+        /// </summary>
         public int langfam_id { get; set; }
+        /// <summary>
+        /// Language id of a langfam_lang_link.
+        /// </summary>
         public int lang_id { get; set; }
-    
+        /// <summary>
+        /// Language table.
+        /// </summary>
         public virtual language language { get; set; }
+        /// <summary>
+        /// Language family table.
+        /// </summary>
         public virtual language_family language_family { get; set; }
     }
 }
