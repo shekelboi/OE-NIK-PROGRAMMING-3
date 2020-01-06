@@ -15,7 +15,7 @@ namespace Languages.Logic.Logics
     /// </summary>
     public class LanguageLogic : ILogic<language>, ILanguageLogic
     {
-        private IRepository<language> repository;
+        private readonly IRepository<language> repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LanguageLogic"/> class.
