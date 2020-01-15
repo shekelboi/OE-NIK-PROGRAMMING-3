@@ -4,10 +4,12 @@
 
 namespace Languages.Logic
 {
+    using System;
+
     /// <summary>
     /// For the query.
     /// </summary>
-    public class QLanguagesByDifficulty
+    public class QLanguagesByDifficulty : IEquatable<QLanguagesByDifficulty>
     {
         private string difficulty;
         private int sum;
@@ -33,5 +35,15 @@ namespace Languages.Logic
         /// Gets number of languages.
         /// </summary>
         public int Sum { get => this.sum; }
+
+        /// <summary>
+        /// For checking equality.
+        /// </summary>
+        /// <param name="other">Other object.</param>
+        /// <returns>Whether they are equal.</returns>
+        public bool Equals(QLanguagesByDifficulty other)
+        {
+            return (this.difficulty == other.difficulty) && (this.sum == other.sum);
+        }
     }
 }

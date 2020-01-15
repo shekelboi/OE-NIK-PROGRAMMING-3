@@ -7,8 +7,6 @@ namespace Languages.Logic.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Languages.Data;
     using Languages.Logic;
     using Languages.Logic.Logics;
@@ -22,6 +20,50 @@ namespace Languages.Logic.Tests
     [TestFixture]
     public class Test
     {
+        /// <summary>
+        /// Testing the  query.
+        /// </summary>
+        [Test]
+        public void TestNumberOfSpeakers()
+        {
+            Mock<IRepository<language>> mLang = new Mock<IRepository<language>>();
+
+            List<language> langList = new List<language>()
+            {
+                new language() { difficulty = "Hard", number_of_speakers = 100 },
+                new language() { difficulty = "Hard", number_of_speakers = 100 },
+                new language() { difficulty = "Hard", number_of_speakers = 100 },
+                new language() { difficulty = "Hard", number_of_speakers = 100 },
+                new language() { difficulty = "Easy", number_of_speakers = 100 },
+                new language() { difficulty = "Easy", number_of_speakers = 100 },
+            };
+
+            mLang.Setup(m => m.GetAll()).Returns(langList.AsQueryable());
+
+            ILogic<language> il = new LanguageLogic(mLang.Object);
+            ILanguageLogic il2 = new LanguageLogic(mLang.Object);
+
+            var actualResults = il2.NumberOfSpeakers();
+
+            foreach (var item in actualResults)
+            {
+                Console.WriteLine(item.Difficulty + "  " + item.NumberOfSpeakers);
+            }
+
+            var expectedResults = new List<QNumberOfSpeakers>()
+            {
+                new QNumberOfSpeakers("Hard", 400),
+                new QNumberOfSpeakers("Easy", 200),
+            };
+
+            // Assert
+            for (int i = 0; i < actualResults.ToList().Count; i++)
+            {
+                Assert.That(actualResults.ToList()[i].Difficulty == expectedResults[i].Difficulty);
+                Assert.That(actualResults.ToList()[i].NumberOfSpeakers == expectedResults[i].NumberOfSpeakers);
+            }
+        }
+
         /// <summary>
         /// Testing the LanguagesByDifficulty() query.
         /// </summary>
@@ -45,10 +87,25 @@ namespace Languages.Logic.Tests
             ILogic<language> il = new LanguageLogic(mLang.Object);
             ILanguageLogic il2 = new LanguageLogic(mLang.Object);
 
+            var actualResults = il2.LanguagesByDifficulty();
+
+            foreach (var item in actualResults)
+            {
+                Console.WriteLine(item.Difficulty + "  " + item.Sum);
+            }
+
+            var expectedResults = new List<QLanguagesByDifficulty>()
+            {
+                new QLanguagesByDifficulty("Hard", 4),
+                new QLanguagesByDifficulty("Easy", 2),
+            };
+
             // Assert
-            Assert.That(il.GetAll().Where(x => x.difficulty == "Hard").Count() == 4);
-            Assert.That(il2.LanguagesByDifficulty().Where(x => x.Difficulty == "Hard").First().Sum == 4);
-            Assert.That(il2.LanguagesByDifficulty().Where(x => x.Difficulty == "Easy").First().Sum == 2);
+            for (int i = 0; i < actualResults.ToList().Count; i++)
+            {
+                Assert.That(actualResults.ToList()[i].Difficulty == expectedResults[i].Difficulty);
+                Assert.That(actualResults.ToList()[i].Sum == expectedResults[i].Sum);
+            }
         }
 
         /// <summary>
@@ -93,14 +150,25 @@ namespace Languages.Logic.Tests
             mLink.Setup(m => m.GetAll()).Returns(linkList.AsQueryable());
 
             ILanguageLogic il1 = new LanguageLogic(mLang.Object);
-            ILogic<language> il2 = new LanguageLogic(mLang.Object);
-            ILogic<language_family> il3 = new LanguageFamilyLogic(mLangFam.Object);
-            ILogic<langfam_lang_link> il4 = new LangfamLangLinkLogic(mLink.Object);
+
+            List<QLanguageFamilies> expectedResults = new List<QLanguageFamilies>()
+            {
+                new QLanguageFamilies("lang1", "fam1"),
+                new QLanguageFamilies("lang2", "fam2"),
+                new QLanguageFamilies("lang3", "fam2"),
+                new QLanguageFamilies("lang4", "fam2"),
+                new QLanguageFamilies("lang5", "fam3"),
+                new QLanguageFamilies("lang6", "fam3"),
+            };
+
+            var actualResults = il1.LanguageFamiliesForTesting(mLang.Object, mLink.Object, mLangFam.Object);
 
             // Assert
-            Console.WriteLine(il1.LanguageFamilies().First().Language_name);
-
-            // Assert.That(il1.LanguageFamilies().First().Langfam_name == "lang1");
+            for (int i = 0; i < actualResults.ToList().Count; i++)
+            {
+                Assert.That(actualResults.ToList()[i].Language_name == expectedResults[i].Language_name);
+                Assert.That(actualResults.ToList()[i].Langfam_name == expectedResults[i].Langfam_name);
+            }
         }
 
         /// <summary>
@@ -224,24 +292,6 @@ namespace Languages.Logic.Tests
 
             object temp = il.GetOne(id);
             mock.Verify(m => m.GetOne(id));
-        }
-
-        /// <summary>
-        /// Test 7 for milestone.
-        /// </summary>
-        [Test]
-        public void Test7()
-        {
-            Assert.That(true is true);
-        }
-
-        /// <summary>
-        /// Test 7 for milestone.
-        /// </summary>
-        [Test]
-        public void Test8()
-        {
-            Assert.That(true is true);
         }
     }
 }

@@ -71,6 +71,18 @@ namespace Languages.Logic.Logics
         }
 
         /// <inheritdoc/>
+        public IEnumerable<QLanguageFamilies> LanguageFamiliesForTesting(IRepository<language> il, IRepository<langfam_lang_link> lll, IRepository<language_family> lf)
+        {
+            var q = from lang in il.GetAll()
+                    join link in lll.GetAll()
+                    on lang.id equals link.lang_id
+                    join langfam in lf.GetAll()
+                    on link.langfam_id equals langfam.id
+                    select new QLanguageFamilies(lang.name, langfam.name);
+            return q.ToList();
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<QLanguagesByDifficulty> LanguagesByDifficulty()
         {
             var q = from lang in this.GetAll()
@@ -99,7 +111,7 @@ namespace Languages.Logic.Logics
         /// <inheritdoc/>
         public IEnumerable<QNumberOfSpeakers> NumberOfSpeakers()
         {
-            var q = from lang in new LanguageLogic().GetAll()
+            var q = from lang in this.GetAll()
                     group lang by lang.difficulty
                     into g
                     select new QNumberOfSpeakers(g.Key, g.Select(x => Convert.ToInt64(x.number_of_speakers)).Sum());

@@ -4,10 +4,12 @@
 
 namespace Languages.Logic
 {
+    using System;
+
     /// <summary>
     /// For the query.
     /// </summary>
-    public class QLanguageFamilies
+    public class QLanguageFamilies : IEquatable<QLanguageFamilies>
     {
         private string languageName;
         private string langfamName;
@@ -33,5 +35,15 @@ namespace Languages.Logic
         /// Gets language family name.
         /// </summary>
         public string Langfam_name { get => this.langfamName; }
+
+        /// <summary>
+        /// For checking equality.
+        /// </summary>
+        /// <param name="other">Other object.</param>
+        /// <returns>Whether they are equal.</returns>
+        public bool Equals(QLanguageFamilies other)
+        {
+            return (this.languageName == other.languageName) && (this.Langfam_name == other.langfamName);
+        }
     }
 }

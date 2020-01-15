@@ -9,8 +9,8 @@ namespace Languages.Logic
     /// </summary>
     public class QNumberOfSpeakers
     {
-        private string difficulty;
-        private long numberOfSpeakers;
+        private readonly string difficulty;
+        private readonly long numberOfSpeakers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QNumberOfSpeakers"/> class.
