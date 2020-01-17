@@ -11,6 +11,7 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     /// <summary>
     /// Language family table.
@@ -33,26 +34,34 @@ namespace Languages.Data
         /// <summary>
         /// Name of a language family.
         /// </summary>
+        [StringLength(50)]
+        [Required()]
         public string name { get; set; }
         /// <summary>
         /// ISO code of a language family.
         /// </summary>
+        [StringLength(10)]
+        [Required()]
         public string iso_code { get; set; }
         /// <summary>
         /// Number of speakers of a language family.
         /// </summary>
+        [Required()]
         public long number_of_speakers { get; set; }
         /// <summary>
         /// Rank by number of speakers of a language family.
         /// </summary>
+        [Required()]
         public int rank_by_no_speakers { get; set; }
         /// <summary>
         /// Number of languages in a language family.
         /// </summary>
+        [Required()]
         public int number_of_languages { get; set; }
         /// <summary>
         /// Rank by number of languages in a language family.
         /// </summary>
+        [Required()]
         public int rank_by_no_languages { get; set; }
     
         /// <summary>

@@ -11,6 +11,7 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Language family - language link.
@@ -24,10 +25,12 @@ namespace Languages.Data
         /// <summary>
         /// Language family id of a langfam_lang_link.
         /// </summary>
+        [Required()]
         public int langfam_id { get; set; }
         /// <summary>
         /// Language id of a langfam_lang_link.
         /// </summary>
+        [Required()]
         public int lang_id { get; set; }
         /// <summary>
         /// Language table.

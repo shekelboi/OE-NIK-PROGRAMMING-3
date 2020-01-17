@@ -11,6 +11,7 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     /// <summary>
     /// Language table.
@@ -34,30 +35,41 @@ namespace Languages.Data
         /// <summary>
         /// Name of a language.
         /// </summary>
+        [StringLength(50)]
+        [Required()]
         public string name { get; set; }
         /// <summary>
         /// Whether a language is agglutinative.
         /// </summary>
+        [IsTorF()]
+        [StringLength(1)]
+        [Required()]
         public string agglutinative { get; set; }
         /// <summary>
         /// Number of tenses in a language.
         /// </summary>
+        [Required()]
         public int number_of_tenses { get; set; }
         /// <summary>
         /// Number of noun declension cases in a language.
         /// </summary>
+        [Required()]
         public int no_of_noun_declension_cases { get; set; }
         /// <summary>
         /// Difficulty of a language.
         /// </summary>
+        [StringLength(20)]
+        [Required()]
         public string difficulty { get; set; }
         /// <summary>
         /// Number of speakers of a language.
         /// </summary>
+        [Required()]
         public int number_of_speakers { get; set; }
         /// <summary>
         /// Rank by number of speakers of a language.
         /// </summary>
+        [Required()]
         public int rank_by_no_speakers { get; set; }
     
         /// <summary>

@@ -11,7 +11,8 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// Country class.
     /// </summary>
@@ -33,22 +34,30 @@ namespace Languages.Data
         /// <summary>
         /// Name of a country.
         /// </summary>
+        [StringLength(40)]
+        [Required()]
         public string name { get; set; }
         /// <summary>
         /// Population of a country.
         /// </summary>
+        [Required()]
         public int population { get; set; }
         /// <summary>
         /// Capital of a coutnry.
         /// </summary>
+        [StringLength(40)]
+        [Required()]
         public string capital { get; set; }
         /// <summary>
         /// Continent of a country.
         /// </summary>
+        [StringLength(40)]
+        [Required()]
         public string continent { get; set; }
         /// <summary>
         /// Area of a country.
         /// </summary>
+        [Required()]
         public int area { get; set; }
         /// <summary>
         /// Country language link table.

@@ -11,6 +11,7 @@ namespace Languages.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     /// <summary>
     /// Country - language link.
@@ -24,10 +25,12 @@ namespace Languages.Data
         /// <summary>
         /// Country id of country_lang_link.
         /// </summary>
+        [Required()]
         public int country_id { get; set; }
         /// <summary>
         /// Language id of country_lang_link.
         /// </summary>
+        [Required()]
         public int lang_id { get; set; }
     
         /// <summary>
