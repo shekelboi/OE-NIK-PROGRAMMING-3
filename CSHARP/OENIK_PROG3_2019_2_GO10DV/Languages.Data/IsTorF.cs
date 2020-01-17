@@ -28,7 +28,7 @@ namespace Languages.Data
         /// <returns>Returns whether the value is valid.</returns>
         public override bool IsValid(object value)
         {
-            return (string)value == "T" || (string)value == "F";
+            return value.ToString().ToUpper() == "T" || value.ToString().ToUpper() == "F";
         }
     }
 }

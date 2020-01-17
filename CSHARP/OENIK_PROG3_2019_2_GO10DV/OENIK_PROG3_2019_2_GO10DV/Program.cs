@@ -21,7 +21,15 @@ namespace OENIK_PROG3_2019_2_GO10DV
         /// <param name="args">Passing arguments while opening the method from console.</param>
         private static void Main(string[] args)
         {
-            Logic.InitDb();
+            try
+            {
+                Logic.InitDb();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             Menu();
         }
 
@@ -41,42 +49,49 @@ namespace OENIK_PROG3_2019_2_GO10DV
             var input = Console.ReadKey(true).Key;
             Console.Clear();
 
-            switch (input)
+            try
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.NumPad1:
-                    Console.WriteLine(ListAll());
-                    break;
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    QueryMenu();
-                    break;
-                case ConsoleKey.D3:
-                case ConsoleKey.NumPad3:
-                    Operations(Operation.ADD);
-                    break;
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                    Operations(Operation.UPDATE);
-                    break;
-                case ConsoleKey.D5:
-                case ConsoleKey.NumPad5:
-                    Operations(Operation.REMOVE);
-                    break;
-                case ConsoleKey.D6:
-                case ConsoleKey.NumPad6:
-                    JAVA();
-                    break;
-                case ConsoleKey.D7:
-                case ConsoleKey.NumPad7:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Invalid();
-                    break;
-            }
+                switch (input)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        Console.WriteLine(ListAll());
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        QueryMenu();
+                        break;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        Operations(Operation.ADD);
+                        break;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        Operations(Operation.UPDATE);
+                        break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        Operations(Operation.REMOVE);
+                        break;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        JAVA();
+                        break;
+                    case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Invalid();
+                        break;
+                }
 
-            Logic.DB.SaveChanges();
+                Logic.DB.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             Console.ReadKey(true);
             Menu();
